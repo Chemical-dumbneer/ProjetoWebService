@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Visão Geral</title>
-    <link rel="stylesheet" href="../view/css/style_std.css">
-    <?php >
+    <link rel="stylesheet" href="css/style_std.css">
 </head>
 <body>
 
