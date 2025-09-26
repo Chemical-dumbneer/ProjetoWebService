@@ -1,7 +1,36 @@
 <?php
 use entities\user;
-require '../model/User.php';
+require '../model/user.php';
 
+function validarUsuario(){
+    $usuario = $_POST["usuario"] ?? null;
+    $senha= $_POST["senha"] ?? null;
+    $error = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (empty($usuario) || empty($senha)) {
+            $error = "Por favor, preencha todos os campos!";
+        } else {
+            $user = new user();
+            if($user->validarLogin($usuario, $senha)){
+                $_SESSION['logado'] = "true";
+                $_SESSION['usuario'] = $usuario;
+
+                header("Location: ../public/index.php");
+                exit;
+            }else {
+                $error = "Usuário ou senha inválidos!";
+            }
+        
+        if(isset($_SESSION["logado"]) && $_SESSION["logado"] == "true"){
+            header("Location: ../public/index.php");
+            exit;
+        }
+     }
+    }
+     
+        require "../view/login.view.php";
+    }
 
 function cadastrarUser() {
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -32,5 +61,4 @@ function listarUsers(){
 
     require '../view/users.view.php';
 }
-
 ?>

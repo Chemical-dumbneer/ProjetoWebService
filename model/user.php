@@ -16,7 +16,8 @@ class user
 
     private $usuarios = [
         ["login" => "admin", "senha" => "1234"],
-        ["login" => "jonas", "senha" => "abcd"]
+        ["login" => "jonas", "senha" => "abcd"],
+        ["login" => "andré","senha" => "777"]
     ];
 
     private static $users = [];
@@ -45,4 +46,13 @@ class user
         return  $_SESSION['usuarios'];
     }
 
+    public function getUserByUsername($username) {
+        $usuarios = $_SESSION['usuarios'] ?? [];
+        foreach ($usuarios as $u) {
+            if ($u['nome'] === $username) {
+                return $u;
+            }
+        }
+        return null;
+    }
 }

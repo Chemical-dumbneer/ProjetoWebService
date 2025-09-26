@@ -8,9 +8,12 @@
 </head>
 
 <header>
-    <nav>
-        <a href="#">+ Novo Chamado</a>
-        <a href="#">= Meus Chamados</a>
+     <nav>
+        <a href="../public/index.php?action=newTicket">+ Novo Chamado</a>
+        <a href="../public/index.php?action=myTickets">= Meus Chamados</a>
+        <a href="../public/index.php?action=cadastrar">Cadastrar usuário</a>
+        <a href="../public/index.php?action=listar">Listar usuários</a>
+
     </nav>
     <div>👤</div>
 </header>
@@ -52,7 +55,7 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-remove">Remover</button>
+            <button type="button"  onclick="window.history.back();" class="btn btn-remove">Voltar</button>
             <button type="submit" class="btn btn-save">Salvar</button>
         </div>
     </form>

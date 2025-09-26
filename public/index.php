@@ -1,24 +1,37 @@
 <?php
     session_start();
-    //require '../control/login.control.php.';// login ainda falta mostrar ao usuario erro
+    
     require '../control/ticket.control.php';
     require '../control/user.control.php';
 
 
-    if (!isset($_SESSION['logado'])) {
-        validarUsuario();
-        exit;
-    }
-    //getTickets();
+   if (!isset($_SESSION['logado'])) {
+    validarUsuario();
+    exit;
+}
 
+$action = $_GET['action'] ?? null;
 
-$action = $_GET['action'] ?? 'cadastrar';
+switch ($action) {
+    case 'cadastrar':
+        cadastrarUser();
+        break;
 
-if($action == 'cadastrar'){
-    cadastrarUser();
-    } else if($action == 'listar'){
-      listarUsers();
-    }elseif($action == 'newTicket'){
+    case 'listar':
+        listarUsers();
+        break;
+
+    case 'newTicket':
+        createTicket();
+        break;
+    case 'myTickets':
+        listarTickets();
+        break;
+    case 'timeLine':
+        abrirTimeLine();
+        break;
+    default:
         getTickets();
-    }
+        break;
+}
 ?>

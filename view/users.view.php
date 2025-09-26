@@ -8,9 +8,12 @@
 </head>
 
 <header>
-    <nav>
-        <a href="#">+ Novo Chamado</a>
-        <a href="#">= Meus Chamados</a>
+     <nav>
+        <a href="../public/index.php?action=newTicket">+ Novo Chamado</a>
+         <a href="../public/index.php?action=myTickets">= Meus Chamados</a>
+        <a href="../public/index.php?action=cadastrar">Cadastrar usuário</a>
+        <a href="../public/index.php?action=listar">Listar usuários</a>
+
     </nav>
     <div>👤</div>
 </header>

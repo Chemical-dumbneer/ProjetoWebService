@@ -13,6 +13,11 @@
             <i class="bi bi-person-circle" style="font-size: 80px;"></i>
     </div>
 
+      <?php if(!empty($error)): ?>
+            <div class="alert alert-danger">
+                <?= htmlspecialchars($error) ?>
+            </div>
+      <?php endif; ?>
 
     <form method="POST" action="../public/index.php" >
       <div class="mb-3">

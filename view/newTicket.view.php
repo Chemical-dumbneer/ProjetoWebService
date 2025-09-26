@@ -8,30 +8,38 @@
 </head>
 
 <header>
-    <nav>
-        <a href="#">+ Novo Chamado</a>
-        <a href="#">= Meus Chamados</a>
+     <nav>
+        <a href="../public/index.php?action=newTicket">+ Novo Chamado</a>
+        <a href="../public/index.php?action=myTickets">= Meus Chamados</a>
+        <a href="../public/index.php?action=cadastrar">Cadastrar usuário</a>
+        <a href="../public/index.php?action=listar">Listar usuários</a>
+
     </nav>
     <div>👤</div>
 </header>
 
 <body>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
+
     <div class="newTicket">
     <div class="form-container ">
     <div class="profile-container">
-        <div class="profile">👤</div>
-        <div>Fulano da Silva</div>
+        <img src="../uploads/<?= htmlspecialchars($fotoUsuario) ?>" alt="Avatar" style="width:50px; height:50px; border-radius:50%; margin-right:10px;">
+        <div><?= $usuario?></div>
     </div>
 
     <form method="POST" action="../public/index.php?action=newTicket">
+       
         <div class="mb-3">
             <label for="titulo" class="form-label">Título do chamado</label>
-            <input type="text" class="form-control" id="titulo" placeholder="Digite o título">
+            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Digite o título">
         </div>
 
         <div class="mb-3">
             <label for="descricao" class="form-label">Descrição</label>
-            <textarea class="form-control" id="descricao" rows="6" placeholder="Digite a descrição"></textarea>
+            <textarea class="form-control" id="descricao"   name="descricao"rows="6" placeholder="Digite a descrição"></textarea>
         </div>
 
         <div class="d-flex justify-content-end">
