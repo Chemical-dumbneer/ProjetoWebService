@@ -19,9 +19,15 @@
 </header>
 
 <body>
-    <?php if (!empty($success)): ?>
-        <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+    <?php if (!empty($sucess)): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($sucess) ?></div>
     <?php endif; ?>
+
+    <?php if(!empty($error)): ?>
+            <div class="alert alert-danger">
+                <?= htmlspecialchars($error) ?>
+            </div>
+      <?php endif; ?>
 
     <div class="newTicket">
     <div class="form-container ">

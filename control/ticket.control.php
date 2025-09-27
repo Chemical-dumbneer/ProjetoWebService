@@ -31,11 +31,13 @@ function createTicket(){
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $titulo = $_POST['titulo'] ?? '';
         $descricao= $_POST['descricao'] ?? '';
-
-        $ticketes = new ticket();
-        
-        $ticketes->addTicket($titulo,$descricao, $usuario);
-        $sucess = "Ticket cadastrado com sucesso!";
+        if (empty($titulo) || empty($descricao)) {
+            $error = "Por favor, preencha todos os campos!";
+        } else {          
+            $ticketes = new ticket();
+            $ticketes->addTicket($titulo,$descricao, $usuario);
+            $sucess = "Ticket cadastrado com sucesso!";
+        }
     }
     require '../view/newTicket.view.php';
 }

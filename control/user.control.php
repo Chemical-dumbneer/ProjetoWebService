@@ -38,18 +38,22 @@ function cadastrarUser() {
         $cargo = $_POST['cargo'] ?? '';
         $funcao = $_POST['funcao'] ?? '';
 
-        $user = new user();
+        if (empty($nome) || empty($cargo)) {
+            $error = "Por favor, preencha todos os campos!";
+        } else {
+            $user = new user();
 
-        $fotoPath = '';
+            $fotoPath = '';
 
-        if(isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
-            $foto = $_FILES['foto'];
-            $fotoPath = 'uploads/' . uniqid() . '-' . $foto['name'];
-            move_uploaded_file($foto['tmp_name'], $fotoPath);
-        }
+            if(isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
+                $foto = $_FILES['foto'];
+                $fotoPath = 'uploads/' . uniqid() . '-' . $foto['name'];
+                move_uploaded_file($foto['tmp_name'], $fotoPath);
+            }
 
-        $user->addUser($nome, $cargo,$funcao, $fotoPath);
-        echo "Usuário cadastrado com sucesso!";
+            $user->addUser($nome, $cargo,$funcao, $fotoPath);
+            $success = "Usuário cadastrado com sucesso!";
+    }
     }
 
     require '../view/newUser.view.php';

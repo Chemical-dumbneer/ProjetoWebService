@@ -21,8 +21,14 @@
 <body>
     <div class="newUser">
     <div class="form-container">
-    
-
+    <?php if(!empty($error)): ?>
+            <div class="alert alert-danger">
+                <?= htmlspecialchars($error) ?>
+            </div>
+      <?php endif; ?>
+    <?php if (!empty($success)): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+    <?php endif; ?>
     <form method="POST"  action="../public/index.php?action=cadastrar"  enctype="multipart/form-data">
         <div class="mb-3">
             <label for="foto" class="form-label">Foto:</label>
