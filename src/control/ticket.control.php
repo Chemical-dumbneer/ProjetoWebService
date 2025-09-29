@@ -1,11 +1,9 @@
 <?php
+namespace control;
 
-use entity\ticket;
-use entities\user;
-require '../model/ticket.php';
-// exemplo: simulação de tickets vindos do banco
-function getTickets()
-{
+use model\user;
+
+function getTickets() {
     $tickets = [
         [
             'usuario' => 'Fulano da Silva',
@@ -18,7 +16,7 @@ function getTickets()
             'descricao' => 'Sistema retorna tela branca ao logar.'
         ]
     ];
-    require '../view/ticket.view.php';
+    require __DIR__ . '/../view/ticket.view.php';
 }
 
 function createTicket(){
@@ -39,16 +37,16 @@ function createTicket(){
             $sucess = "Ticket cadastrado com sucesso!";
         }
     }
-    require '../view/newTicket.view.php';
+    require __DIR__ . '/../view/newTicket.view.php';
 }
 
 function listarTickets(){
     $ticketes = new ticket();
-   $tickits = $ticketes->getTickets();
+    $tickits = $ticketes->getTickets();
 
-    require '../view/ticket.view.php';
+    require __DIR__ . '/../view/ticket.view.php';
 }
 
 function abrirTimeLine(){
-    require '../view/ticketTimeline.view.php';
+    require __DIR__ . '/../view/ticketTimeline.view.php';
 }

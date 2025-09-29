@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../public/css/style_std.css">
+    <link rel="stylesheet" href="/css/style_std.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<header>
-     <nav>
-        <a href="../public/index.php?action=newTicket">+ Novo Chamado</a>
-        <a href="../public/index.php?action=myTickets">= Meus Chamados</a>
-        <a href="../public/index.php?action=cadastrar">Cadastrar usuário</a>
-        <a href="../public/index.php?action=listar">Listar usuários</a>
+<?php
+    use enum\TipoUsuario;
 
-    </nav>
-    <div>👤</div>
-</header>
+    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+
+    // garanta que a sessão já foi iniciada no front controller (index.php)
+    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['username'] ?? null;
+
+    renderHeader($tipo, $username);
+?>
 
 <body>
     <div class="newUser">
@@ -29,7 +30,7 @@
     <?php if (!empty($success)): ?>
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
-    <form method="POST"  action="../public/index.php?action=cadastrar"  enctype="multipart/form-data">
+    <form method="POST"  action="/index.php?action=cadastrar"  enctype="multipart/form-data">
         <div class="mb-3">
             <label for="foto" class="form-label">Foto:</label>
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
@@ -39,23 +40,28 @@
         </div>
 
         <div class="mb-3">
-            <label for="nome" class="form-label">Nome do Usuário</label>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome">
+            <label for="username" class="form-label">Nome de Usuário</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Digite um nome de usuário">
         </div>
 
         <div class="mb-3">
-            <label for="cargo" class="form-label">Cargo</label>
-            <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Digite seu cargo">
+            <label for="nomeCompleto" class="form-label">Nome completo</label>
+            <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" placeholder="Digite seu nome completo">
+        </div>
+
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite uma senha forte">
         </div>
 
         <div class="mb-3">
             <label class="form-label d-block">Função</label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="funcao" id="usuario" value="usuario" checked>
+                <input class="form-check-input" type="radio" name="funcao" id="usuario" value=1 checked>
                 <label class="form-check-label" for="usuario">Usuário</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="funcao" id="tecnico" value="tecnico">
+                <input class="form-check-input" type="radio" name="funcao" id="tecnico" value=2>
                 <label class="form-check-label" for="tecnico">Técnico</label>
             </div>
         </div>

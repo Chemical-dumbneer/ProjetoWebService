@@ -1,12 +1,12 @@
 <?php
-    session_start();
-    
-    require '../control/ticket.control.php';
-    require '../control/user.control.php';
+require __DIR__ . '/../bootstrap.php';
+
+require __DIR__ . '/../src/control/ticket.control.php';
+require __DIR__ . '/../src/control/user.control.php';
 
 
-   if (!isset($_SESSION['logado'])) {
-    validarUsuario();
+if (!isset($_SESSION['logado'])) {
+    validarInfoLogin();
     exit;
 }
 

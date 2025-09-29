@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Visão Geral</title>
-    <link rel="stylesheet" href="css/style_std.css">
+    <link rel="stylesheet" href="/css/style_std.css">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <nav>
-        <a href="../public/index.php?action=newTicket">+ Novo Chamado</a>
-        <a href="../public/index.php?action=myTickets">= Meus Chamados</a>
-        <a href="../public/index.php?action=cadastrar">Cadastrar usuário</a>
-        <a href="../public/index.php?action=listar">Listar usuários</a>
+<?php
+    use enum\TipoUsuario;
 
-    </nav>
-    <div>👤</div>
-</header>
+    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+
+    // garanta que a sessão já foi iniciada no front controller (index.php)
+    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['username'] ?? null;
+
+    renderHeader($tipo, $username);
+?>
 
 <div class="container">
        <?php if (empty($tickits)): ?>
@@ -26,7 +27,7 @@
         </div>
     <?php else: ?>
     <?php foreach($tickits as $t): ?>
-    <a href="../public/index.php?action=timeLine">
+    <a href="/index.php?action=timeLine">
     <div class="ticket">
         <div class="avatar">👤</div>
         <div class="content">
