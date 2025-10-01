@@ -18,7 +18,7 @@ function renderHeader(TipoUsuario $tipo, ?string $username = null, ?string $foto
             <?php if ($tipo === TipoUsuario::Usuario): ?>
                 <a href="/index.php?action=newTicket">+ Novo Chamado</a>
                 <a href="/index.php?action=myTickets">= Meus Chamados</a>
-            <?php else: ?>
+            <?php elseif ($tipo === TipoUsuario::Tecnico): ?>
                 <a href="/index.php?action=newTicket">+ Novo Chamado</a>
                 <a href="/index.php?action=myTickets">= Meus Chamados</a>
                 <a href="/index.php?action=cadastrar">Cadastrar usuário</a>

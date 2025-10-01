@@ -21,22 +21,22 @@
 ?>
 
 <div class="container">
-       <?php if (empty($tickits)): ?>
+       <?php if (empty($tickets)): ?>
         <div class="alert alert-warning text-center">
             Não há tickets abertos no momento.
         </div>
     <?php else: ?>
-    <?php foreach($tickits as $t): ?>
-    <a href="/index.php?action=timeLine">
-    <div class="ticket">
-        <div class="avatar">👤</div>
-        <div class="content">
-            <h3><?= htmlspecialchars($t->getTitulo()) ?></h3>
-            <p><?= htmlspecialchars($t->getDescricao()) ?></p>
-            <div class="usuario"><?= htmlspecialchars($t->getRequerentUsername()) ?></div>
-        </div>
-    </div>
-    </a>
+    <?php foreach($tickets as $t): ?>
+        <a href="/index.php?action=timeLine&id=<?= $t->getId() ?>" class="ticket-link">
+            <div class="ticket">
+                <div class="avatar">👤</div>
+                <div class="content">
+                    <h3 ><?= htmlspecialchars($t->getTitulo()) ?></h3>
+                    <p ><?= htmlspecialchars($t->getDescricao()) ?></p>
+                    <p>• Criado em: <?= $t->getDataCriacao()->format('d/m/Y H:i') ?></p>
+                </div>
+            </div>
+        </a>
     <?php endforeach; ?>
      <?php endif; ?>
 </div>

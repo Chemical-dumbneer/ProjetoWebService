@@ -28,8 +28,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Foto</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Nome completo</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">username</th>
                             <th scope="col">Função</th>
                         </tr>
                     </thead>

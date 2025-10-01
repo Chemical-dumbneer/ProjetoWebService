@@ -13,4 +13,13 @@ enum TicketInteractionType: int{
             self::Solution => 'Solução'
         };
     }
+
+    public static function getFromText(string $desc): TicketInteractionType {
+        return match($desc) {
+            'FollowUp' => self::FollowUp,
+            'Task' => self::Task,
+            'Solution' => self::Solution,
+            default => throw new \InvalidArgumentException("Tipo de interação inválido")
+        };
+    }
 }

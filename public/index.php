@@ -3,10 +3,10 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../src/control/ticket.control.php';
+require_once __DIR__ . '/../src/control/user.control.php';
 
-require __DIR__ . '/../src/control/ticket.control.php';
-require __DIR__ . '/../src/control/user.control.php';
 
 
 if (!isset($_SESSION['logado'])) {
@@ -15,7 +15,7 @@ if (!isset($_SESSION['logado'])) {
 }
 
 $action = $_GET['action'] ?? null;
-
+$id = $_GET['id'] ?? null;
 switch ($action) {
     case 'cadastrar':
         \control\cadastrarUser();
@@ -32,10 +32,10 @@ switch ($action) {
         \control\listarTickets();
         break;
     case 'timeLine':
-        \control\abrirTimeLine();
+        \control\abrirTimeLine($id);
         break;
     default:
-        \control\showTickets();
+         \control\listarTickets();
         break;
 }
 ?>

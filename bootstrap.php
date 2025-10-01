@@ -2,10 +2,15 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use model\Ticket;
+require_once __DIR__ . '/src/model/TicketInteraction.php';
 use model\TicketInteraction;
+require_once __DIR__ . '/src/enum/TicketStatus.php';
 use enum\TicketStatus;
+require_once __DIR__ . '/src/enum/TicketInteractionType.php';
 use enum\TicketInteractionType;
+require_once __DIR__ . '/src/model/User.php';
 use model\User;
+require_once __DIR__ . '/src/enum/TipoUsuario.php';
 use enum\TipoUsuario;
 
 // definir constantes
@@ -19,10 +24,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (empty($_SESSION['_seeded_tickets'])) {
     $_SESSION["temp_usuarios"] = [
-        new User("admin", "Administrador", "admin", null, TipoUsuario::Tecnico),
-        new User("jeancarlos", "Jean Pires de Carlos", "jean1234", null,TipoUsuario::Tecnico),
-        new User("andreemilio", "Andre Luiz Pereira Emilio", "andre1234", null,TipoUsuario::Tecnico),
-        new User("testuser", "Usuário de Teste", "test1234", null,TipoUsuario::Usuario)
+        new User("admin", "Administrador", "admin", 'img/users/defaultUserPic.png', TipoUsuario::Tecnico),
+        new User("jeancarlos", "Jean Pires de Carlos", "jean1234", 'img/users/defaultUserPic.png',TipoUsuario::Tecnico),
+        new User("andreemilio", "Andre Luiz Pereira Emilio", "andre1234", 'img/users/defaultUserPic.png',TipoUsuario::Tecnico),
+        new User("testuser", "Usuário de Teste", "test1234", 'img/users/defaultUserPic.png',TipoUsuario::Usuario)
     ];
 
     $_SESSION['temp_tickets'] = [
@@ -257,10 +262,10 @@ if (empty($_SESSION['_seeded_tickets'])) {
 
 // Autoload simples (se não usar Composer)
 //spl_autoload_register(function ($class) {
-//    $path = SRC_PATH . '/' . str_replace('\\', '/', $class) . '.php';
-//    if (file_exists($path)) {
-//        require $path;
-//    }
+   //$path = APP_ROOT . '/' . str_replace('\\', '/', $class) . '.php';
+   //if (file_exists($path)) {
+    //   require $path;
+   //}
 //});
 
 // talvez carregar configurações
