@@ -39,10 +39,12 @@ class TicketRepository {
     }
 
     function addTicketInteraction($idTicket, $novoTicketInteraction):void {
-        foreach($_SESSION['temp_tickets'] as $ticket){
+        foreach($_SESSION['temp_tickets'] as &$ticket){
             if($ticket->getId() == $idTicket){
                 $ticket->addInteraction($novoTicketInteraction);
+                break;
             }
         }
+        unset($ticket); 
     }
 }

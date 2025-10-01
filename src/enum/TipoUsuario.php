@@ -12,10 +12,11 @@ enum TipoUsuario: int {
         };
     }
 
-    public function getFromText(string $desc):TipoUsuario {
+    public static  function getFromText(string $desc):TipoUsuario {
         return match ($desc) {
             'Usuario' => TipoUsuario::Usuario,
-            'Tecnico' => TipoUsuario::Tecnico
+            'Tecnico' => TipoUsuario::Tecnico,
+            default => throw new \InvalidArgumentException("Tipo de usuário inválido")
         };
     }
 }

@@ -39,8 +39,6 @@
                         <td>
                             <?php if (!empty($u->getCaminhoFoto())): ?>
                                     <img src="<?= htmlspecialchars($u->getCaminhoFoto())?>" alt="Foto" class="table-img" width="50">
-                            <?php if (!empty($u->getCaminhoFoto())): ?>
-                                    <img src="<?= htmlspecialchars($u->getCaminhoFoto())?>" alt="Foto" class="table-img" width="50">
                             <?php else: ?>
                                     <span>Sem foto</span>
                             <?php endif; ?>

@@ -27,7 +27,7 @@
         </div>
     <?php else: ?>
     <?php foreach($tickets as $t): ?>
-        <a href="/index.php?action=timeLine" class="ticket-link">
+        <a href="/index.php?action=timeLine&id=<?= $t->getId() ?>" class="ticket-link">
             <div class="ticket">
                 <div class="avatar">👤</div>
                 <div class="content">
