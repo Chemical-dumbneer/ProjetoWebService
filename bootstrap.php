@@ -1,9 +1,16 @@
 <?php
+require_once __DIR__ . '/src/model/Ticket.php';
 use model\Ticket;
+require_once __DIR__ . '/src/model/TicketInteraction.php';
 use model\TicketInteraction;
+require_once __DIR__ . '/src/enum/TicketStatus.php';
 use enum\TicketStatus;
+require_once __DIR__ . '/src/enum/TicketInteractionType.php';
 use enum\TicketInteractionType;
+require_once __DIR__ . '/src/model/User.php';
 use model\User;
+require_once __DIR__ . '/src/enum/TipoUsuario.php';
+use enum\TipoUsuario;
 
 // definir constantes
 define('APP_ROOT', dirname(__DIR__));
@@ -16,10 +23,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (empty($_SESSION['_seeded_tickets'])) {
     $_SESSION["temp_usuarios"] = [
-        new User("admin", "Administrador", "admin", null, TipoUsuario::Tecnico),
-        new User("jeancarlos", "Jean Pires de Carlos", "jean1234", null,TipoUsuario::Tecnico),
-        new User("andreemilio", "Andre Luiz Pereira Emilio", "andre1234", null,TipoUsuario::Tecnico),
-        new User("testuser", "Usuário de Teste", "test1234", null,TipoUsuario::Usuario)
+        new User("admin", "Administrador", "admin", 'img/users/defaultUserPic.png', TipoUsuario::Tecnico),
+        new User("jeancarlos", "Jean Pires de Carlos", "jean1234", 'img/users/defaultUserPic.png',TipoUsuario::Tecnico),
+        new User("andreemilio", "Andre Luiz Pereira Emilio", "andre1234", 'img/users/defaultUserPic.png',TipoUsuario::Tecnico),
+        new User("testuser", "Usuário de Teste", "test1234", 'img/users/defaultUserPic.png',TipoUsuario::Usuario)
     ];
 
     $_SESSION['temp_tickets'] = [
@@ -107,7 +114,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
 
     // Interações variadas
     // Ticket 1
-    $t = &$_SESSION['tickets'][0];
+    $t = &$_SESSION['temp_tickets'][0];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'andreemilio',
@@ -131,7 +138,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 2
-    $t = &$_SESSION['tickets'][1];
+    $t = &$_SESSION['temp_tickets'][1];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'jeancarlos',
@@ -148,7 +155,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 3
-    $t = &$_SESSION['tickets'][2];
+    $t = &$_SESSION['temp_tickets'][2];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'andreemilio',
@@ -165,7 +172,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 4
-    $t = &$_SESSION['tickets'][3];
+    $t = &$_SESSION['temp_tickets'][3];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'jeancarlos',
@@ -175,7 +182,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 5
-    $t = &$_SESSION['tickets'][4];
+    $t = &$_SESSION['temp_tickets'][4];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'andreemilio',
@@ -192,7 +199,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 6
-    $t = &$_SESSION['tickets'][5];
+    $t = &$_SESSION['temp_tickets'][5];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'jeancarlos',
@@ -202,7 +209,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 7
-    $t = &$_SESSION['tickets'][6];
+    $t = &$_SESSION['temp_tickets'][6];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'jeancarlos',
@@ -212,7 +219,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 8
-    $t = &$_SESSION['tickets'][7];
+    $t = &$_SESSION['temp_tickets'][7];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'andreemilio',
@@ -229,7 +236,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 9
-    $t = &$_SESSION['tickets'][8];
+    $t = &$_SESSION['temp_tickets'][8];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'jeancarlos',
@@ -239,7 +246,7 @@ if (empty($_SESSION['_seeded_tickets'])) {
     ));
 
     // Ticket 10
-    $t = &$_SESSION['tickets'][9];
+    $t = &$_SESSION['temp_tickets'][9];
     $t->addInteraction(new TicketInteraction(
         timelinePosition: 1,
         author: 'andreemilio',
@@ -254,10 +261,10 @@ if (empty($_SESSION['_seeded_tickets'])) {
 
 // Autoload simples (se não usar Composer)
 //spl_autoload_register(function ($class) {
-//    $path = SRC_PATH . '/' . str_replace('\\', '/', $class) . '.php';
-//    if (file_exists($path)) {
-//        require $path;
-//    }
+   //$path = APP_ROOT . '/' . str_replace('\\', '/', $class) . '.php';
+   //if (file_exists($path)) {
+    //   require $path;
+   //}
 //});
 
 // talvez carregar configurações

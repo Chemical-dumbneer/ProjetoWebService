@@ -11,32 +11,32 @@
 <?php
     use enum\TipoUsuario;
 
-    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+    require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
-    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
+    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Tecnico;
     $username = $_SESSION['username'] ?? null;
 
     renderHeader($tipo, $username);
 ?>
 
 <div class="container">
-       <?php if (empty($tickits)): ?>
+       <?php if (empty($tickets)): ?>
         <div class="alert alert-warning text-center">
             Não há tickets abertos no momento.
         </div>
     <?php else: ?>
-    <?php foreach($tickits as $t): ?>
-    <a href="/index.php?action=timeLine">
-    <div class="ticket">
-        <div class="avatar">👤</div>
-        <div class="content">
-            <h3><?= htmlspecialchars($t['titulo']) ?></h3>
-            <p><?= htmlspecialchars($t['descricao']) ?></p>
-            <div class="usuario"><?= htmlspecialchars($t['usuario']) ?></div>
-        </div>
-    </div>
-    </a>
+    <?php foreach($tickets as $t): ?>
+        <a href="/index.php?action=timeLine" class="ticket-link">
+            <div class="ticket">
+                <div class="avatar">👤</div>
+                <div class="content">
+                    <h3 ><?= htmlspecialchars($t->getTitulo()) ?></h3>
+                    <p ><?= htmlspecialchars($t->getDescricao()) ?></p>
+                    <p>• Criado em: <?= $t->getDataCriacao()->format('d/m/Y H:i') ?></p>
+                </div>
+            </div>
+        </a>
     <?php endforeach; ?>
      <?php endif; ?>
 </div>

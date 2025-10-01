@@ -10,7 +10,7 @@
 <?php
     use enum\TipoUsuario;
 
-    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+    require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
     $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;

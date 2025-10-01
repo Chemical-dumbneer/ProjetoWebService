@@ -1,7 +1,12 @@
 <?php
 namespace control;
 
+require_once __DIR__ . '/../repository/TicketRepository.php';
+require_once __DIR__ . '/../repository/UserRepository.php';
 use model\user;
+use model\Ticket;
+use repository\TicketRepository;
+use repository\UserRepository;
 
 function getTickets() {
     $tickets = [
@@ -21,10 +26,11 @@ function getTickets() {
 
 function createTicket(){
     $usuario   = $_SESSION['usuario'] ?? 'Anônimo';
-    $userModel = new user();
-    $userData = $userModel->getUserByUsername($usuario);
+   
+    $userRepo = new UserRepository();
+    $userData = $userRepo->getUserByUsername($usuario);
 
-    $fotoUsuario = $userData['photoPath'] ?? 'default.png';
+    $fotoUsuario = $userData ? $userData->getCaminhoFoto() : 'img/users/defaultUserPic.png';
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $titulo = $_POST['titulo'] ?? '';
@@ -32,8 +38,8 @@ function createTicket(){
         if (empty($titulo) || empty($descricao)) {
             $error = "Por favor, preencha todos os campos!";
         } else {          
-            $ticketes = new ticket();
-            $ticketes->addTicket($titulo,$descricao, $usuario);
+             $repo = new TicketRepository();
+            $repo->addTicket($titulo,$descricao, $usuario);
             $sucess = "Ticket cadastrado com sucesso!";
         }
     }
@@ -41,9 +47,8 @@ function createTicket(){
 }
 
 function listarTickets(){
-    $ticketes = new ticket();
-    $tickits = $ticketes->getTickets();
-
+    $repo = new TicketRepository();
+    $tickets = $repo->getTickets();
     require __DIR__ . '/../view/ticket.view.php';
 }
 

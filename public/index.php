@@ -1,8 +1,8 @@
 <?php
-require __DIR__ . '/../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 
-require __DIR__ . '/../src/control/ticket.control.php';
-require __DIR__ . '/../src/control/user.control.php';
+require_once __DIR__ . '/../src/control/ticket.control.php';
+require_once __DIR__ . '/../src/control/user.control.php';
 
 
 if (!isset($_SESSION['logado'])) {
@@ -22,16 +22,16 @@ switch ($action) {
         break;
 
     case 'newTicket':
-        createTicket();
+        \control\createTicket();
         break;
     case 'myTickets':
-        listarTickets();
+        \control\listarTickets();
         break;
     case 'timeLine':
-        abrirTimeLine();
+        \control\abrirTimeLine();
         break;
     default:
-        getTickets();
+        \control\listarTickets();
         break;
 }
 ?>

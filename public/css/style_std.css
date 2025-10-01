@@ -215,3 +215,14 @@ body {
 textarea.form-control {
     min-height: 100px;
 }
+
+.ticket-link {
+    text-decoration: none;  /* remove o sublinhado */
+    color: inherit;         /* mantém a cor do texto do card */
+    display: block;         /* para que o <a> envolva todo o div */
+}
+
+.ticket-link:hover {
+    text-decoration: none;  /* mantém sem sublinhado ao passar o mouse */
+}
+
