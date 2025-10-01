@@ -15,7 +15,7 @@ class Ticket
     /** @var TicketInteraction[]; */
     private array $interactions;
 
-    public function __construct(int $id = 0, string $requerent = '',string $titulo = '',string $descricao,$dataCriacao = new \DateTime(),$status = TicketStatus::Aberto)
+    public function __construct(int $id, string $requerent,string $titulo,string $descricao, DateTime $dataCriacao, TicketStatus $status)
     {
         $this->id = $id;
         $this->requerentUsername = $requerent;

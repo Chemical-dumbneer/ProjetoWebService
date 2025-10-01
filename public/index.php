@@ -3,14 +3,17 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../bootstrap.php';
-require_once __DIR__ . '/../src/control/ticket.control.php';
-require_once __DIR__ . '/../src/control/user.control.php';
+use control\UserControl;
+use control\TicketControl;
 
+require_once __DIR__ . '/../bootstrap.php';
+
+require_once __DIR__ . '/../src/control/UserControl.php';
+require_once __DIR__ . '/../src/control/TicketControl.php';
 
 
 if (!isset($_SESSION['logado'])) {
-    \control\validarInfoLogin();
+    UserControl::validarInfoLogin();
     exit;
 }
 
@@ -18,24 +21,24 @@ $action = $_GET['action'] ?? null;
 $id = $_GET['id'] ?? null;
 switch ($action) {
     case 'cadastrar':
-        \control\cadastrarUser();
+        UserControl::cadastrarUser();
         break;
 
     case 'listar':
-        \control\listarUsers();
+        UserControl::listarUsers();
         break;
 
     case 'newTicket':
-        \control\createTicket();
+        TicketControl::createTicket();
         break;
     case 'myTickets':
-        \control\listarTickets();
+        TicketControl::listarMeusTickets();
         break;
     case 'timeLine':
-        \control\abrirTimeLine($id);
+        TicketControl::abrirTimeLine($id);
         break;
     default:
-         \control\listarTickets();
+        TicketControl::listarTickets();
         break;
 }
 ?>

@@ -17,7 +17,7 @@
       "model\\": "src/model/",
       "enum\\": "src/enum/",
       "control\\": "src/control/",
-      "repository\\": "src/repository"
+      "repository\\": "src/repository/"
     }
   },
   "require": {

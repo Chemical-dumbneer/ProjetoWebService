@@ -7,12 +7,12 @@ class UserRepository{
      public function __construct() {
     }
 
-    function getUsers():array {
+    static function getUsers():array {
         return $_SESSION["temp_usuarios"];
     }
 
-    function validarCredenciais(string $login, string $senha):bool {
-        foreach ($this->getUsers() as $usuario) {
+    static function validarCredenciais(string $login, string $senha):bool {
+        foreach (UserRepository::getUsers() as $usuario) {
             if ($usuario->getUsername() === $login && $usuario->getSenha() === $senha) {
                 return true;
             }
@@ -20,7 +20,7 @@ class UserRepository{
         return false;
     }
 
-    function addUser(User $novoUsuario):void {
+    static function addUser(User $novoUsuario):void {
         if (!$novoUsuario->getCaminhoFoto()) {
             $reflexao = new \ReflectionClass($novoUsuario);
             $prop = $reflexao->getProperty('caminhoFoto');
@@ -30,7 +30,7 @@ class UserRepository{
         $_SESSION['temp_usuarios'][]  = $novoUsuario;
     }
 
-    function getUserByUsername(string $username) {
+    static function getUserByUsername(string $username):User | null {
         /** @var User $u */
         foreach ($_SESSION['temp_usuarios'] as $u) {
             if ($u->getUsername() === $username) {

@@ -1,6 +1,7 @@
 <?php
 namespace repository;
 
+use DateTime;
 use model\Ticket;
 use model\TicketInteraction;
 use enum\TicketStatus;
@@ -12,15 +13,11 @@ class TicketRepository {
         
     }
 
-    function getTickets():array {
-         $tickets = $_SESSION['temp_tickets'] ?? [];
-
-        return array_map(function($t) {
-            return $t instanceof Ticket ? $t : new Ticket($t['id'] ?? count($_SESSION['temp_tickets'] ?? []) + 1 ,$t['titulo'] ?? 'Sem título',$t['descricao'] ?? '',$t['usuario'] ?? 'Anônimo');
-        }, $tickets);
+    static function getTickets():array {
+         return $_SESSION['temp_tickets'];
     }
 
-    function getTicketInteractions($idTicket):array {
+    static function getTicketInteractions($idTicket):array {
         foreach ($_SESSION['temp_tickets'] as $ticket) {
             if ($ticket->getId() == $idTicket) {
                 return $ticket->getInteractions();
@@ -29,16 +26,23 @@ class TicketRepository {
         return [];
     }
 
-    function addTicket(string $titulo, string $descricao, string $usuario):void {
+    static function addTicket(string $titulo, string $descricao, string $usuario):void {
         $id = count($_SESSION['temp_tickets'] ?? []) + 1;
-        $ticket = new Ticket($id, $usuario,$titulo, $descricao,);
+        $ticket = new Ticket(
+            id: $id,
+            requerent: $usuario,
+            titulo: $titulo,
+            descricao: $descricao,
+            dataCriacao: new DateTime('now'),
+            status: TicketStatus::Aberto
+        );
         if (!isset($_SESSION['temp_tickets'])) {
             $_SESSION['temp_tickets'] = [];
         }
         $_SESSION['temp_tickets'][] = $ticket;
     }
 
-    function addTicketInteraction($idTicket, $novoTicketInteraction):void {
+    static function addTicketInteraction($idTicket, $novoTicketInteraction):void {
         foreach($_SESSION['temp_tickets'] as &$ticket){
             if($ticket->getId() == $idTicket){
                 $ticket->addInteraction($novoTicketInteraction);

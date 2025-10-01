@@ -35,7 +35,7 @@ function renderHeader(TipoUsuario $tipo, ?string $username = null, ?string $foto
                 <span><?= $usernameSafe ?></span>
             </button>
             <div id="userDropdown" style="display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #ccc; border-radius: 4px; min-width: 150px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);">
-                <a href="/index.php?action=perfil" style="display: block; padding: 10px; text-decoration: none; color: black;">Meu Perfil</a>
+                <!-- <a href="/index.php?action=perfil" style="display: block; padding: 10px; text-decoration: none; color: black;">Meu Perfil</a> -->
                 <a href="/logout.php" style="display: block; padding: 10px; text-decoration: none; color: red;">Sair</a>
             </div>
         </div>
