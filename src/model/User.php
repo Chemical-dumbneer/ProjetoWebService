@@ -30,7 +30,7 @@ class User
         return $this->senha;
     }
 
-    public function getCaminhoFoto(): string {
+    public function getCaminhoFoto(): string | null{
         return $this->caminhoFoto;
     }
 

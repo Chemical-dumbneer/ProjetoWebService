@@ -10,11 +10,11 @@
 <?php
     use enum\TipoUsuario;
 
-    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+    require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
-    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
-    $username = $_SESSION['username'] ?? null;
+    $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['usuario'] ?? null;
 
     renderHeader($tipo, $username);
 ?>

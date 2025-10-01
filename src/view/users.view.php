@@ -10,11 +10,11 @@
 <?php
     use enum\TipoUsuario;
 
-    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+    require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
-    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
-    $username = $_SESSION['username'] ?? null;
+    $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['usuario'] ?? null;
 
     renderHeader($tipo, $username);
 ?>
@@ -28,8 +28,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Foto</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cargo</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Nome completo</th>
                             <th scope="col">Função</th>
                         </tr>
                     </thead>
@@ -37,15 +37,15 @@
                 <?php foreach($users as $u): ?>
                     <tr>
                         <td>
-                            <?php if (!empty($u['foto'])): ?>
-                                    <img src="<?= htmlspecialchars($u['foto'])?>" alt="Foto" class="table-img" width="50">
+                            <?php if (!empty($u->getCaminhoFoto())): ?>
+                                    <img src="<?= htmlspecialchars($u->getCaminhoFoto())?>" alt="Foto" class="table-img" width="50">
                             <?php else: ?>
                                     <span>Sem foto</span>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($u['nome']) ?></td>
-                        <td><?= htmlspecialchars($u['cargo']) ?></td>
-                        <td><?= htmlspecialchars($u['funcao']) ?></td>
+                        <td><?= htmlspecialchars($u->getUsername()) ?></td>
+                        <td><?= htmlspecialchars($u->getNomeCompleto()) ?></td>
+                        <td><?= htmlspecialchars($u->getTipoUsuario()->getDescricao()) ?></td>
                     </tr>
                  <?php endforeach; ?>
             </tbody>

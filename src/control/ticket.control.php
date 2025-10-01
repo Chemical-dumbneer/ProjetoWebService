@@ -1,39 +1,27 @@
 <?php
 namespace control;
+use model\User;
 
-use model\user;
+require_once __DIR__ . "/../repository/ticket.repository.php";
+require_once __DIR__ . "/../repository/user.repository.php";
 
-function getTickets() {
-    $tickets = [
-        [
-            'usuario' => 'Fulano da Silva',
-            'titulo' => 'Meu PC não liga',
-            'descricao' => 'Lorem ipsum depois que o encanador trocou o cano o pc desligou'
-        ],
-        [
-            'usuario' => 'Maria Oliveira',
-            'titulo' => 'Erro ao acessar sistema',
-            'descricao' => 'Sistema retorna tela branca ao logar.'
-        ]
-    ];
+function showTickets() {
     require __DIR__ . '/../view/ticket.view.php';
 }
 
 function createTicket(){
     $usuario   = $_SESSION['usuario'] ?? 'Anônimo';
-    $userModel = new user();
-    $userData = $userModel->getUserByUsername($usuario);
+    $userData = getUserByUsername($usuario);
 
-    $fotoUsuario = $userData['photoPath'] ?? 'default.png';
+    $fotoUsuario = $userData->getCaminhoFoto() ?? 'default.png';
     
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $titulo = $_POST['titulo'] ?? '';
         $descricao= $_POST['descricao'] ?? '';
         if (empty($titulo) || empty($descricao)) {
             $error = "Por favor, preencha todos os campos!";
-        } else {          
-            $ticketes = new ticket();
-            $ticketes->addTicket($titulo,$descricao, $usuario);
+        } else {
+            addTicket($titulo,$descricao, $usuario);
             $sucess = "Ticket cadastrado com sucesso!";
         }
     }
@@ -41,8 +29,7 @@ function createTicket(){
 }
 
 function listarTickets(){
-    $ticketes = new ticket();
-    $tickits = $ticketes->getTickets();
+    $tickits = getTickets();
 
     require __DIR__ . '/../view/ticket.view.php';
 }

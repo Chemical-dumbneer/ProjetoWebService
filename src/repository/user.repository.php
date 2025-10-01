@@ -1,4 +1,5 @@
 <?php
+
 use model\User;
 use enum\TipoUsuario;
 

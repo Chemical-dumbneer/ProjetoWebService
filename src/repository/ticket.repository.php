@@ -1,4 +1,5 @@
 <?php
+
 use model\Ticket;
 use model\TicketInteraction;
 use enum\TicketStatus;

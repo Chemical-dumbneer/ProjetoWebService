@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 require __DIR__ . '/../bootstrap.php';
 
 require __DIR__ . '/../src/control/ticket.control.php';
@@ -6,7 +10,7 @@ require __DIR__ . '/../src/control/user.control.php';
 
 
 if (!isset($_SESSION['logado'])) {
-    validarInfoLogin();
+    \control\validarInfoLogin();
     exit;
 }
 
@@ -14,24 +18,24 @@ $action = $_GET['action'] ?? null;
 
 switch ($action) {
     case 'cadastrar':
-        cadastrarUser();
+        \control\cadastrarUser();
         break;
 
     case 'listar':
-        listarUsers();
+        \control\listarUsers();
         break;
 
     case 'newTicket':
-        createTicket();
+        \control\createTicket();
         break;
     case 'myTickets':
-        listarTickets();
+        \control\listarTickets();
         break;
     case 'timeLine':
-        abrirTimeLine();
+        \control\abrirTimeLine();
         break;
     default:
-        getTickets();
+        \control\showTickets();
         break;
 }
 ?>

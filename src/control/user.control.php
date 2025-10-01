@@ -1,8 +1,10 @@
 <?php
+namespace control;
 
 use enum\TipoUsuario;
 use model\User;
-require __DIR__.'/../repository/user.repository.php';
+
+require_once __DIR__.'/../repository/user.repository.php';
 
 function validarInfoLogin(){
     $usuario = $_POST["usuario"] ?? null;
@@ -69,8 +71,8 @@ function cadastrarUser(): void {
 }
 
 function listarUsers(){
-     getUsers();
+     $users = getUsers();
 
-    require '../view/users.view.php';
+    require __DIR__ .'/../view/users.view.php';
 }
 ?>

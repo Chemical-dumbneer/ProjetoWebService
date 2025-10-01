@@ -11,11 +11,11 @@
 <?php
     use enum\TipoUsuario;
 
-    require_once __DIR__ . '/../partials/header.php'; // ajuste o caminho
+    require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
-    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
-    $username = $_SESSION['username'] ?? null;
+    $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['usuario'] ?? null;
 
     renderHeader($tipo, $username);
 ?>
@@ -31,9 +31,9 @@
     <div class="ticket">
         <div class="avatar">👤</div>
         <div class="content">
-            <h3><?= htmlspecialchars($t['titulo']) ?></h3>
-            <p><?= htmlspecialchars($t['descricao']) ?></p>
-            <div class="usuario"><?= htmlspecialchars($t['usuario']) ?></div>
+            <h3><?= htmlspecialchars($t->getTitulo()) ?></h3>
+            <p><?= htmlspecialchars($t->getDescricao()) ?></p>
+            <div class="usuario"><?= htmlspecialchars($t->getRequerentUsername()) ?></div>
         </div>
     </div>
     </a>
