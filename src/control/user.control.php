@@ -1,9 +1,11 @@
 <?php
+namespace control;
 
 require_once __DIR__ . '/../repository/UserRepository.php';
 use enum\TipoUsuario;
 use model\User;
-use repository\UserRepository;
+
+require_once __DIR__.'/../repository/user.repository.php';
 
 function validarInfoLogin(){
     $usuario = $_POST["usuario"] ?? null;
@@ -86,6 +88,6 @@ function listarUsers(){
     $userRepo = new UserRepository();
     $users = $userRepo->getUsers();
 
-    require  __DIR__ .'/../view/users.view.php';
+    require __DIR__ .'/../view/users.view.php';
 }
 ?>

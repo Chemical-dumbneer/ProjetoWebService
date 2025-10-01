@@ -1,12 +1,16 @@
 <?php
-require_once __DIR__ . '/../bootstrap.php';
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require __DIR__ . '/../bootstrap.php';
 
 require_once __DIR__ . '/../src/control/ticket.control.php';
 require_once __DIR__ . '/../src/control/user.control.php';
 
 
 if (!isset($_SESSION['logado'])) {
-    validarInfoLogin();
+    \control\validarInfoLogin();
     exit;
 }
 
@@ -14,11 +18,11 @@ $action = $_GET['action'] ?? null;
 
 switch ($action) {
     case 'cadastrar':
-        cadastrarUser();
+        \control\cadastrarUser();
         break;
 
     case 'listar':
-        listarUsers();
+        \control\listarUsers();
         break;
 
     case 'newTicket':
@@ -31,7 +35,7 @@ switch ($action) {
         \control\abrirTimeLine();
         break;
     default:
-        \control\listarTickets();
+        \control\showTickets();
         break;
 }
 ?>

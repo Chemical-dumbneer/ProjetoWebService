@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Novo Usuário</title>
     <link rel="stylesheet" href="/css/style_std.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -13,8 +13,8 @@
     require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
-    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
-    $username = $_SESSION['username'] ?? null;
+    $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['usuario'] ?? null;
 
     renderHeader($tipo, $username);
 ?>

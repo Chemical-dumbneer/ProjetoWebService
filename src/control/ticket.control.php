@@ -1,26 +1,11 @@
 <?php
 namespace control;
+use model\User;
 
-require_once __DIR__ . '/../repository/TicketRepository.php';
-require_once __DIR__ . '/../repository/UserRepository.php';
-use model\user;
-use model\Ticket;
-use repository\TicketRepository;
-use repository\UserRepository;
+require_once __DIR__ . "/../repository/ticket.repository.php";
+require_once __DIR__ . "/../repository/user.repository.php";
 
-function getTickets() {
-    $tickets = [
-        [
-            'usuario' => 'Fulano da Silva',
-            'titulo' => 'Meu PC não liga',
-            'descricao' => 'Lorem ipsum depois que o encanador trocou o cano o pc desligou'
-        ],
-        [
-            'usuario' => 'Maria Oliveira',
-            'titulo' => 'Erro ao acessar sistema',
-            'descricao' => 'Sistema retorna tela branca ao logar.'
-        ]
-    ];
+function showTickets() {
     require __DIR__ . '/../view/ticket.view.php';
 }
 

@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/src/model/Ticket.php';
+require __DIR__ . '/vendor/autoload.php';
+
 use model\Ticket;
 require_once __DIR__ . '/src/model/TicketInteraction.php';
 use model\TicketInteraction;

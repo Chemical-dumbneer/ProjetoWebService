@@ -13,8 +13,8 @@
     require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
-    $tipo = $_SESSION['tipo_usuario'] ?? TipoUsuario::Usuario;
-    $username = $_SESSION['username'] ?? null;
+    $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
+    $username = $_SESSION['usuario'] ?? null;
 
     renderHeader($tipo, $username);
 ?>
@@ -39,13 +39,15 @@
                         <td>
                             <?php if (!empty($u->getCaminhoFoto())): ?>
                                     <img src="<?= htmlspecialchars($u->getCaminhoFoto())?>" alt="Foto" class="table-img" width="50">
+                            <?php if (!empty($u->getCaminhoFoto())): ?>
+                                    <img src="<?= htmlspecialchars($u->getCaminhoFoto())?>" alt="Foto" class="table-img" width="50">
                             <?php else: ?>
                                     <span>Sem foto</span>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($u->getNomeCompleto()) ?></td>
                         <td><?= htmlspecialchars($u->getUsername()) ?></td>
-                        <td><?= htmlspecialchars($u->getTipoUsuario()->name) ?></td>
+                        <td><?= htmlspecialchars($u->getNomeCompleto()) ?></td>
+                        <td><?= htmlspecialchars($u->getTipoUsuario()->getDescricao()) ?></td>
                     </tr>
                  <?php endforeach; ?>
             </tbody>

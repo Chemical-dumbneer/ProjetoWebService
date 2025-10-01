@@ -1,0 +1,26 @@
+{
+  "name": "utfpr/projeto-webservice",
+  "description": "Projeto WebService em PHP 8.4",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Jean P. Carlos",
+      "email": "jeanpirescarlos@alunos.utfpr.edu.br"
+    },
+    {
+      "name": "Andre L. P. Emilio",
+      "email": "andreemilio@alunos.utfpr.edu.br"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "model\\": "src/model/",
+      "enum\\": "src/enum/",
+      "control\\": "src/control/",
+      "repository\\": "src/repository"
+    }
+  },
+  "require": {
+    "php": ">=8.4"
+  }
+}
