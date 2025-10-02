@@ -46,22 +46,20 @@ Crie o arquivo `/etc/nginx/sites-available/webservice` (e linke para `sites-enab
 
 ```nginx
 server {
-    listen 80;
-    server_name localhost;
+    listen 80 default_server;
+    server_name projetowebservice.local;
 
-    root /srv/http/ProjetoWebService/public;
-
-    index index.php index.html;
+    root  /home/<username>/Projetos/ProjetoWebService/public;
+    index index.php;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
     location ~ \.php$ {
-        include fastcgi_params;
-        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+        fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }
 ```
