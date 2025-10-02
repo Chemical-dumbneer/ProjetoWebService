@@ -129,7 +129,7 @@ Pode-se criar um script `.bat` para iniciar o PHP junto com o Nginx.
 ## Primeira execução
 Após configurar e iniciar os serviços, abra no navegador:
 ```
-http://localhost
+[http://localhost](http://projetowebservice.local)
 ```
 O sistema deve exibir a página inicial do ProjetoWebService.
 
