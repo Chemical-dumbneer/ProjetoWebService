@@ -32,23 +32,17 @@
     <h3>Ticket: <?= htmlspecialchars($ticket->getTitulo()) ?></h3>
 
     <div class="d-flex flex-column ">
-        <?php foreach($interactions as $i):
-            $author = $i->getAuthor();
-            $user = UserRepository::getUserByUsername($author); 
-            $tipoUsuario = $user->getTipoUsuario();
-            $isUsuario = $tipoUsuario === TipoUsuario::Usuario;
-
-            $classes = $isUsuario 
-                ? "align-self-start bg-light border-start border-3 border-primary"
-                : "align-self-end bg-info text-white";
-            $avatar = strtoupper($author[0]);
+        <?php foreach($interactionsViewData as $data):
+            $i = $data['interaction'];
+            $foto = $data['foto'];
+            $classes = $data['classes'];
         ?>
 
         <div class="card p-3 mb-2 <?php echo $classes; ?>" style="max-width: 70%;">
             <div class="d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center">
-                    <span class="rounded-circle bg-secondary text-white me-3" style="width:40px; height:40px; display:flex; justify-content:center; align-items:center;"><?php echo $avatar; ?></span>
-                    <strong><?php echo htmlspecialchars($author); ?></strong>
+                    <img src="<?=$foto?>" class="rounded-circle bg-secondary text-white me-3" style="width:40px; height:40px; display:flex; justify-content:center; align-items:center;">
+                    <strong><?php echo htmlspecialchars($i->getAuthor()); ?></strong>
                 </div>
                 <small class="text-muted"><?php echo $i->getDatetime()->format('d/m/Y H:i'); ?></small>
             </div>
@@ -61,19 +55,21 @@
 
     <form method="post" class="mt-3" >
         <div class="mb-3">
+        <?php if(isset($tipo) && $tipo === TipoUsuario::Tecnico):?>
         <label class="form-label"><strong>Tipo de Resposta:</strong></label>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="tipo_ticket" id="tipo_followUp" value="FollowUp" checked>
             <label class="form-check-label" for="tipo_followUp">FollowUp</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tipo_ticket" id="tipo_task" value=Task>
+            <input class="form-check-input" type="radio" name="tipo_ticket" id="tipo_task" value="Task">
             <label class="form-check-label" for="tipo_task">Task</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="tipo_ticket" id="tipo_solution" value="Solution">
             <label class="form-check-label" for="tipo_solution">Solution</label>
         </div>
+        <?php endif; ?>
     </div>
 
     <div class="mb-3">

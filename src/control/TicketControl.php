@@ -6,7 +6,7 @@ use model\TicketInteraction;
 use repository\TicketRepository;
 use repository\UserRepository;
 use enum\TicketInteractionType;
-
+use enum\TipoUsuario;
 use DateTime;
 
 class TicketControl {
@@ -68,11 +68,6 @@ class TicketControl {
             }
         }
 
-        if (!$ticket) {
-            echo "<p>Ticket não encontrado!</p>";
-            return;
-        }
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['mensagem'])) {
             $tipoSelecionado = $_POST['tipo_ticket'] ?? 'FollowUp';
             $tipoEnum = TicketInteractionType::getFromText($tipoSelecionado);
@@ -89,7 +84,7 @@ class TicketControl {
         }
 
         $interactions = $ticket->getInteractions();
-
+        $interactionsViewData =self::prepararInteracao($interactions);
         require __DIR__ . '/../view/ticketTimeline.view.php';
     }
 
@@ -124,4 +119,41 @@ class TicketControl {
 
         header("Location: index.php?controller=ticket&action=abrirTimeLine&id=$ticketId");
     }
+
+    static function prepararInteracao(array $interactions): array{
+        $result = [];
+        foreach($interactions as $i){
+                $author = $i->getAuthor();
+                $user = UserRepository::getUserByUsername($author); 
+                $tipoUsuario = $user->getTipoUsuario();
+                $isUsuario = $tipoUsuario === TipoUsuario::Usuario;
+                $foto = $user?->getCaminhoFoto() ?? '/img/users/defaultUserPic.png';
+
+                switch($i->getInteractionType()->name) {
+                    case 'Task':
+                        $colorClass = 'bg-warning text-dark';
+                        break;
+                    case 'Solution':
+                        $colorClass = 'bg-success text-white';
+                        break;
+                    case 'FollowUp':
+                    default:
+                        $colorClass = 'bg-info text-white';
+                        break;
+                }
+                 $classes = $isUsuario ? "align-self-start bg-light border-start border-3 border-primary" : "align-self-end $colorClass";
+                
+            $result[] = [
+                'interaction' => $i,
+                'user' => $user,
+                'tipoUsuario' => $tipoUsuario,
+                'isUsuario' => $isUsuario,
+                'foto' => $foto,
+                'colorClass' => $colorClass,
+                'classes' => $classes
+            ];
+            }
+            return $result;      
+    }
+
 }
