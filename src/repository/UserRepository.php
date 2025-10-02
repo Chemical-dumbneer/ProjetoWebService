@@ -20,14 +20,8 @@ class UserRepository{
         return false;
     }
 
-    static function addUser(User $novoUsuario):void {
-        if (!$novoUsuario->getCaminhoFoto()) {
-            $reflexao = new \ReflectionClass($novoUsuario);
-            $prop = $reflexao->getProperty('caminhoFoto');
-            $prop->setAccessible(true);
-            $prop->setValue($novoUsuario, 'img/users/defaultUserPic.png');
-        }
-        $_SESSION['temp_usuarios'][]  = $novoUsuario;
+    static function addUser(User $novoUsuario): void {
+        $_SESSION['temp_usuarios'][] = $novoUsuario;
     }
 
     static function getUserByUsername(string $username):User | null {

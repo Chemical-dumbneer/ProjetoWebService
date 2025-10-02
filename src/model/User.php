@@ -10,11 +10,11 @@ class User
     private ?string $caminhoFoto;
     private TipoUsuario $tipoUsuario;
 
-    public function __construct(string $username, string $nomeCompleto, string $senha, string $caminhoFoto, TipoUsuario $tipoUsuario) {
+    public function __construct(string $username, string $nomeCompleto, string $senha, ?string $caminhoFoto, TipoUsuario $tipoUsuario) {
         $this->username = $username;
         $this->nomeCompleto = $nomeCompleto;
         $this->senha = $senha;
-        $this->caminhoFoto = ($caminhoFoto == null)?$caminhoFoto:'img/users/defaultUserPic.png';
+        $this->caminhoFoto = $caminhoFoto ?? 'img/users/defaultUserPic.png';
         $this->tipoUsuario = $tipoUsuario;
     }
 

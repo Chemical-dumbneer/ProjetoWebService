@@ -21,12 +21,9 @@ class TicketControl {
 
     static function createTicket(): void {
         $usuario = $_SESSION['usuario'] ?? 'Anônimo';
-
-        $userRepo = new UserRepository();
         $userData = UserRepository::getUserByUsername($usuario);
 
-        $fotoUsuario = ($userData == null) ? $userData->getCaminhoFoto() : 'img/users/defaultUserPic.png';
-
+        $fotoUsuario =  $userData?->getCaminhoFoto() ?? 'img/users/defaultUserPic.png';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $titulo = $_POST['titulo'] ?? '';
             $descricao = $_POST['descricao'] ?? '';
@@ -77,7 +74,7 @@ class TicketControl {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['mensagem'])) {
-            $tipoSelecionado = $_POST['InteractionType'] ?? 'FollowUp';
+            $tipoSelecionado = $_POST['tipo_ticket'] ?? 'FollowUp';
             $tipoEnum = TicketInteractionType::getFromText($tipoSelecionado);
 
             $ticket->addInteraction(

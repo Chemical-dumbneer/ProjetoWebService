@@ -24,6 +24,7 @@ class UserControl {
                     $_SESSION['logado'] = "true";
                     $_SESSION['usuario'] = $usuario;
                     $_SESSION['tipoUsuario'] = UserRepository::getUserByUsername($usuario)->getTipoUsuario();
+                    $_SESSION['fotoUsuario'] = UserRepository::getUserByUsername($usuario)->getCaminhoFoto();
 
                     header("Location: index.php");
                     exit;
@@ -61,12 +62,12 @@ class UserControl {
                     $foto = $_FILES['foto'];
                     $fileName = uniqid() . '-' . basename($foto['name']);
                     $destino = $uploadDir . $fileName;
+
                     if (move_uploaded_file($foto['tmp_name'], $destino)) {
                         $fotoPath = '/img/users/' . $fileName;
                     } else {
                         $fotoPath = '/img/users/defaultUserPic.png';
                     }
-                    move_uploaded_file($foto['tmp_name'], $fotoPath);
                 } else {
                     $fotoPath = '/img/users/defaultUserPic.png';
                 }

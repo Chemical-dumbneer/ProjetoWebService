@@ -21,8 +21,9 @@ function renderHeader(TipoUsuario $tipo, ?string $username = null, ?string $foto
             <?php elseif ($tipo === TipoUsuario::Tecnico): ?>
                 <a href="/index.php?action=newTicket">+ Novo Chamado</a>
                 <a href="/index.php?action=myTickets">= Meus Chamados</a>
-                <a href="/index.php?action=cadastrar">Cadastrar usuário</a>
-                <a href="/index.php?action=listar">Listar usuários</a>
+                <a href="/index.php">> Listar Chamados</a>
+                <a href="/index.php?action=cadastrar">+ Cadastrar usuário</a>
+                <a href="/index.php?action=listar">> Listar usuários</a>
             <?php endif; ?>
         </nav>
 

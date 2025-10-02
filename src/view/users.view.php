@@ -15,8 +15,8 @@
     // garanta que a sessão já foi iniciada no front controller (index.php)
     $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
     $username = $_SESSION['usuario'] ?? null;
-
-    renderHeader($tipo, $username);
+    $foto = $_SESSION['fotoUsuario'] ?? null;
+    renderHeader($tipo, $username,$foto);
 ?>
 
 <body>

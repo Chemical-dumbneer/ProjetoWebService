@@ -10,14 +10,15 @@
 
 <?php
     use enum\TipoUsuario;
+use repository\UserRepository;
 
     require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
     $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
     $username = $_SESSION['usuario'] ?? null;
-
-    renderHeader($tipo, $username);
+    $foto = $_SESSION['fotoUsuario'] ?? null;
+    renderHeader($tipo, $username,$foto);
 ?>
 
 <div class="container">
@@ -28,12 +29,19 @@
     <?php else: ?>
     <?php foreach($tickets as $t): ?>
         <a href="/index.php?action=timeLine&id=<?= $t->getId() ?>" class="ticket-link">
+             <?php
+                $user = UserRepository::getUserByUsername($t->getRequerentUsername());
+                $foto = $user?->getCaminhoFoto() ?? '/img/users/defaultUserPic.png';
+            ?>
             <div class="ticket">
-                <div class="avatar">👤</div>
+                <div class="avatar"> 
+                    <img  src="<?= htmlspecialchars($foto) ?>" width="60" height="60" alt="Avatar do usuário">
+            </div>
                 <div class="content">
                     <h3 ><?= htmlspecialchars($t->getTitulo()) ?></h3>
                     <p ><?= htmlspecialchars($t->getDescricao()) ?></p>
-                    <p>• Criado em: <?= $t->getDataCriacao()->format('d/m/Y H:i') ?></p>
+                    <p><?= $t->getRequerentUsername()?> • Criado em: <?= $t->getDataCriacao()->format('d/m/Y H:i') ?></p>
+                    
                 </div>
             </div>
         </a>

@@ -15,8 +15,8 @@
     // garanta que a sessão já foi iniciada no front controller (index.php)
     $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
     $username = $_SESSION['usuario'] ?? null;
-
-    renderHeader($tipo, $username);
+    $foto = $_SESSION['fotoUsuario'] ?? null;
+    renderHeader($tipo, $username,$foto);
 ?>
 
 <body>
@@ -33,7 +33,7 @@
     <div class="newTicket">
     <div class="form-container ">
     <div class="profile-container">
-        <img src="../uploads/<?= htmlspecialchars($fotoUsuario) ?>" alt="Avatar" style="width:50px; height:50px; border-radius:50%; margin-right:10px;">
+        <img src="<?= htmlspecialchars($fotoUsuario) ?>" alt="Avatar" style="width:50px; height:50px; border-radius:50%; margin-right:10px;">
         <div><?= $usuario?></div>
     </div>
 

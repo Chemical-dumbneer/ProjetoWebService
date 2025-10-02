@@ -10,14 +10,16 @@
 
 <?php
     use enum\TipoUsuario;
+    use repository\TicketRepository;
+    use repository\UserRepository;
 
     require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 
     // garanta que a sessão já foi iniciada no front controller (index.php)
     $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
     $username = $_SESSION['usuario'] ?? null;
-
-    renderHeader($tipo, $username);
+    $foto = $_SESSION['fotoUsuario'] ?? null;
+    renderHeader($tipo, $username,$foto);
 ?>
 
 <body>
@@ -32,7 +34,7 @@
     <div class="d-flex flex-column ">
         <?php foreach($interactions as $i):
             $author = $i->getAuthor();
-            $user = $userRepo->getUserByUsername($author); 
+            $user = UserRepository::getUserByUsername($author); 
             $tipoUsuario = $user->getTipoUsuario();
             $isUsuario = $tipoUsuario === TipoUsuario::Usuario;
 
