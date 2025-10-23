@@ -29,7 +29,8 @@
             </div>
       <?php endif; ?>
     <div class="container py-4">
-    <h3>Ticket: <?= htmlspecialchars($ticket->getTitulo()) ?></h3>
+    <h3><strong>Título: <?= htmlspecialchars($ticket->getTitulo()) ?></strong></h3>
+        <h4>Descrição: <?= htmlspecialchars($ticket->getDescricao()) ?></h4>
 
     <div class="d-flex flex-column ">
         <?php foreach($interactionsViewData as $data):
