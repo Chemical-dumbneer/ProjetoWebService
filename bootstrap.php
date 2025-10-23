@@ -16,7 +16,7 @@ use enum\TipoUsuario;
 // definir constantes
 define('APP_ROOT', dirname(__DIR__));
 define('SRC_PATH', APP_ROOT . '/src');
-
+ 
 // iniciar sessão
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
