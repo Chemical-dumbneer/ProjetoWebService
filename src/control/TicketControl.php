@@ -8,11 +8,11 @@ use repository\UserRepository;
 use enum\TicketInteractionType;
 use enum\TipoUsuario;
 use DateTime;
-
+use Pecee\SimpleRouter\SimpleRouter;
 class TicketControl {
 
     public function __construct() {
-
+        
     }
 
     static function showTickets(): void {
@@ -101,7 +101,7 @@ class TicketControl {
         $novoId = $_SESSION['nextInteractionId']++;
 
         if (!$ticketId || !$mensagem || !$tipo_ticket || !$usuario) {
-            header("Location: index.php?controller=ticket&action=abrirTimeLine&id=$ticketId");
+            header("Location: /ticket/<?=$ticketId ?>/timeline");
             $erro = "Escreva uma mensagem, antes de enviar!";
             exit;
         }
@@ -117,7 +117,7 @@ class TicketControl {
         );
         TicketRepository::addTicketInteraction($ticketId, $interaction);
 
-        header("Location: index.php?controller=ticket&action=abrirTimeLine&id=$ticketId");
+        header("Location: /ticket/<?=$ticketId ?>/timeline");
     }
 
     static function prepararInteracao(array $interactions): array{

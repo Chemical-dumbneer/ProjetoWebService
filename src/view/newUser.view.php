@@ -30,7 +30,7 @@
     <?php if (!empty($success)): ?>
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
-    <form method="POST"  action="/index.php?action=cadastrar"  enctype="multipart/form-data">
+    <form method="POST"  action="/user/new"  enctype="multipart/form-data">
         <div class="mb-3">
             <label for="foto" class="form-label">Foto:</label>
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*">

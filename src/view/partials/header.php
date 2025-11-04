@@ -16,14 +16,14 @@ function renderHeader(TipoUsuario $tipo, ?string $username = null, ?string $foto
     <header>
         <nav>
             <?php if ($tipo === TipoUsuario::Usuario): ?>
-                <a href="/index.php?action=newTicket">+ Novo Chamado</a>
-                <a href="/index.php?action=myTickets">= Meus Chamados</a>
+                <a href="/ticket/new">+ Novo Chamado</a>
+                <a href="/ticket/my">= Meus Chamados</a>
             <?php elseif ($tipo === TipoUsuario::Tecnico): ?>
-                <a href="/index.php?action=newTicket">+ Novo Chamado</a>
-                <a href="/index.php?action=myTickets">= Meus Chamados</a>
-                <a href="/index.php">> Listar Chamados</a>
-                <a href="/index.php?action=cadastrar">+ Cadastrar usuário</a>
-                <a href="/index.php?action=listar">> Listar usuários</a>
+                <a href="/ticket/new">+ Novo Chamado</a>
+                <a href="/ticket/my">= Meus Chamados</a>
+                <a href="/home">> Listar Chamados</a>
+                <a href="/user/new">+ Cadastrar usuário</a>
+                <a href="/user/listar">> Listar usuários</a>
             <?php endif; ?>
         </nav>
 
@@ -37,7 +37,7 @@ function renderHeader(TipoUsuario $tipo, ?string $username = null, ?string $foto
             </button>
             <div id="userDropdown" style="display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #ccc; border-radius: 4px; min-width: 150px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);">
                 <!-- <a href="/index.php?action=perfil" style="display: block; padding: 10px; text-decoration: none; color: black;">Meu Perfil</a> -->
-                <a href="/logout.php" style="display: block; padding: 10px; text-decoration: none; color: red;">Sair</a>
+                <a href="/logout" style="display: block; padding: 10px; text-decoration: none; color: red;">Sair</a>
             </div>
         </div>
 

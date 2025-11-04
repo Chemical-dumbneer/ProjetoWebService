@@ -19,7 +19,7 @@
             </div>
       <?php endif; ?>
 
-    <form method="POST" action="/index.php" >
+    <form method="POST" action="/login" >
       <div class="mb-3">
         <input type="text" class="form-control rounded-pill text-center bg-secondary text-white placeholder-light" placeholder="Usuário" name="usuario">
       </div>

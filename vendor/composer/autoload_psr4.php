@@ -6,8 +6,10 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'routes\\' => array($baseDir . '/src/routes'),
     'repository\\' => array($baseDir . '/src/repository'),
     'model\\' => array($baseDir . '/src/model'),
     'enum\\' => array($baseDir . '/src/enum'),
     'control\\' => array($baseDir . '/src/control'),
+    'Pecee\\' => array($vendorDir . '/pecee/simple-router/src/Pecee'),
 );

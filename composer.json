@@ -17,10 +17,13 @@
       "model\\": "src/model/",
       "enum\\": "src/enum/",
       "control\\": "src/control/",
-      "repository\\": "src/repository/"
+      "repository\\": "src/repository/",
+      "routes\\": "src/routes/"
+      
     }
   },
   "require": {
-    "php": ">=8.4"
+    "php": ">=8.4",
+    "pecee/simple-router": "^5.4"
   }
 }

@@ -9,6 +9,7 @@ class ComposerStaticInitb4c753566ef5928430c7ce37b3661382
     public static $prefixLengthsPsr4 = array (
         'r' => 
         array (
+            'routes\\' => 7,
             'repository\\' => 11,
         ),
         'm' => 
@@ -23,9 +24,17 @@ class ComposerStaticInitb4c753566ef5928430c7ce37b3661382
         array (
             'control\\' => 8,
         ),
+        'P' => 
+        array (
+            'Pecee\\' => 6,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'routes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/routes',
+        ),
         'repository\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/repository',
@@ -41,6 +50,10 @@ class ComposerStaticInitb4c753566ef5928430c7ce37b3661382
         'control\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/control',
+        ),
+        'Pecee\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pecee/simple-router/src/Pecee',
         ),
     );
 

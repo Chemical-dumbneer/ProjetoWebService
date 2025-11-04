@@ -37,7 +37,7 @@
         <div><?= $usuario?></div>
     </div>
 
-    <form method="POST" action="/index.php?action=newTicket">
+    <form method="POST" action="/ticket/new">
        
         <div class="mb-3">
             <label for="titulo" class="form-label">Título do chamado</label>

@@ -1,45 +1,27 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 
 require_once "../vendor/autoload.php";
-
-
-use control\UserControl;
-use control\TicketControl;
-
+require_once "../src/routes/routes.php";
 require_once __DIR__ . '/../bootstrap.php';
 
+use Pecee\SimpleRouter\SimpleRouter;
+use enum\TipoUsuario;
 
-
-if (!isset($_SESSION['logado'])) {
-    UserControl::validarInfoLogin();
+$rotasPublicas = ['/login', '/logout'];
+$currentUrl = $_SERVER['REQUEST_URI'];
+if (!isset($_SESSION['logado']) && !in_array($currentUrl, $rotasPublicas)) {
+    SimpleRouter::response()->redirect('/login');
     exit;
 }
 
-$action = $_GET['action'] ?? null;
-$id = $_GET['id'] ?? null;
-switch ($action) {
-    case 'cadastrar':
-        UserControl::cadastrarUser();
-        break;
-
-    case 'listar':
-        UserControl::listarUsers();
-        break;
-
-    case 'newTicket':
-        TicketControl::createTicket();
-        break;
-    case 'myTickets':
-        TicketControl::listarMeusTickets();
-        break;
-    case 'timeLine':
-        TicketControl::abrirTimeLine($id);
-        break;
-    default:
-        TicketControl::listarTickets();
-        break;
+if (isset($_SESSION['logado']) && $currentUrl === '/login') {
+    SimpleRouter::response()->redirect('/home');
 }
+
+if((isset($_SESSION['logado']) && ($_SESSION['tipoUsuario'] === TipoUsuario::Usuario)) && (($currentUrl === '/user/new') ||($currentUrl === '/user/listar')))  {
+     SimpleRouter::response()->redirect('/home');
+}
+
+SimpleRouter::start();
+
 ?>

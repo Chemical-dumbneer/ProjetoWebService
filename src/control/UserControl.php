@@ -1,14 +1,13 @@
 <?php
 namespace control;
 
-require_once __DIR__ . '/../repository/UserRepository.php';
 use enum\TipoUsuario;
 use model\User;
 use repository\UserRepository;
-
+use Pecee\SimpleRouter\SimpleRouter;
 class UserControl {
     function __Construct() {
-
+        
     }
 
     static function validarInfoLogin() {
@@ -26,14 +25,14 @@ class UserControl {
                     $_SESSION['tipoUsuario'] = UserRepository::getUserByUsername($usuario)->getTipoUsuario();
                     $_SESSION['fotoUsuario'] = UserRepository::getUserByUsername($usuario)->getCaminhoFoto();
 
-                    header("Location: index.php");
+                    SimpleRouter::response()->redirect('/home');
                     exit;
                 } else {
                     $error = "Usuário ou senha inválidos!";
                 }
 
                 if (isset($_SESSION["logado"]) && $_SESSION["logado"] == "true") {
-                    header("Location: index.php");
+                    SimpleRouter::response()->redirect('/home');
                     exit;
                 }
             }

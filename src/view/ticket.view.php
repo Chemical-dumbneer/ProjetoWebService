@@ -28,7 +28,7 @@ use repository\UserRepository;
         </div>
     <?php else: ?>
     <?php foreach($tickets as $t): ?>
-        <a href="/index.php?action=timeLine&id=<?= $t->getId() ?>" class="ticket-link">
+        <a href="/ticket/<?= $t->getId() ?>/timeline" class="ticket-link">
              <?php
                 $user = UserRepository::getUserByUsername($t->getRequerentUsername());
                 $foto = $user?->getCaminhoFoto() ?? '/img/users/defaultUserPic.png';
