@@ -6,16 +6,19 @@ class User
 {
     private string $username;
     private string $nomeCompleto;
-    private string $senha;
+    private ?string $senha;
     private ?string $caminhoFoto;
     private TipoUsuario $tipoUsuario;
 
-    public function __construct(string $username, string $nomeCompleto, string $senha, ?string $caminhoFoto, TipoUsuario $tipoUsuario) {
+    public function __construct(string $username, string $nomeCompleto, ?string $caminhoFoto, TipoUsuario $tipoUsuario) {
         $this->username = $username;
         $this->nomeCompleto = $nomeCompleto;
-        $this->senha = $senha;
         $this->caminhoFoto = $caminhoFoto ?? 'img/users/defaultUserPic.png';
         $this->tipoUsuario = $tipoUsuario;
+    }
+
+    public function setSenha(string $senha): void {
+        $this->senha = $senha;
     }
 
     public function getUsername(): string {

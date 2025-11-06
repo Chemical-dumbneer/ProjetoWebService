@@ -70,15 +70,14 @@ class UserControl {
                 } else {
                     $fotoPath = '/img/users/defaultUserPic.png';
                 }
-                UserRepository::addUser(
-                    new User(
-                        username: $nome,
-                        nomeCompleto: $nomeCompleto,
-                        senha: $senha,
-                        caminhoFoto: $fotoPath,
-                        tipoUsuario: $funcao
-                    )
+                $user = new User(
+                    username: $nome,
+                    nomeCompleto: $nomeCompleto,
+                    caminhoFoto: $fotoPath,
+                    tipoUsuario: $funcao
                 );
+                $user->setSenha($senha);
+                UserRepository::addUser($user);
                 $success = "Usuário cadastrado com sucesso!";
             }
         }

@@ -19,11 +19,24 @@
       "control\\": "src/control/",
       "repository\\": "src/repository/",
       "routes\\": "src/routes/"
-      
+
     }
   },
   "require": {
     "php": ">=8.4",
-    "pecee/simple-router": "^5.4"
-  }
+    "pecee/simple-router": "^5.4",
+    "ext-pdo": "*",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "require-dev": {
+    "robmorgan/phinx": "^0.16"
+  },
+  "scripts": {
+    "migrate": "vendor/bin/phinx migrate -e production",
+    "rollback": "vendor/bin/phinx rollback -e production -t -1",
+    "seed": "vendor/bin/phinx seed:run -e production",
+    "status": "vendor/bin/phinx status -e production"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
