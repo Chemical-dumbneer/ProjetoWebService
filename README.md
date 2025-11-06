@@ -1,55 +1,119 @@
 # Projeto WebService
 
-Este projeto é um sistema de gerenciamento de chamados (Tickets) desenvolvido em PHP, utilizando Nginx como servidor web.  
-Este documento descreve os requisitos, a instalação e a configuração do ambiente tanto em **Linux (Arch Linux)** quanto em **Windows**.
+Sistema de gerenciamento de chamados (Tickets) desenvolvido em **PHP 8** com **PostgreSQL** e **Nginx**.  
+Segue o padrão **MVC simplificado**, utilizando **Composer** para autoload e controle de dependências.
 
 ---
 
-## Requisitos
+## Tecnologias
 
-- PHP 8.1 ou superior (com extensões `pdo`, `mbstring`, `json`, `openssl`)
-- Composer (gerenciador de dependências do PHP)
-- Nginx (servidor web)
-- Git (opcional, para clonar o repositório)
+- **PHP** 8.1 ou superior (extensões `pdo`, `mbstring`, `json`, `openssl`)
+- **PostgreSQL** 14 ou superior
+- **Nginx** (servidor web)
+- **Composer** (gerenciador de dependências)
+- **Pecee Simple Router** (roteamento)
+- **Phinx** (migrations)
+- **Dotenv** (configuração de ambiente)
 
 ---
 
-## Instalação no Linux (Arch Linux)
+## Estrutura do Projeto
 
-### 1. Instalar pacotes necessários
-```bash
-sudo pacman -S nginx php php-fpm composer git
+```
+ProjetoWebService/
+├── src/
+│   ├── control/
+│   ├── model/
+│   ├── repository/
+│   ├── view/
+│   └── Database.php
+├── migrations/
+├── public/
+│   └── index.php
+├── vendor/
+├── composer.json
+├── .env
+└── README.md
 ```
 
-### 2. Clonar o projeto
+---
+
+## Configuração do Ambiente
+
+### 1. Instalar dependências
+
 ```bash
-cd /srv/http
-git clone https://seu-repo.git ProjetoWebService
-cd ProjetoWebService
 composer install
 ```
 
-### 3. Configurar PHP-FPM
-Edite `/etc/php/php.ini` e habilite extensões necessárias (removendo o `;` do início da linha):
+### 2. Configurar variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto com as credenciais do banco de dados:
+
 ```ini
-extension=mbstring
-extension=openssl
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=webservice_dev
+DB_USER=seu_usuario
+DB_PASS=sua_senha
 ```
 
-Inicie e habilite o serviço:
+O arquivo `.env` é lido pela classe `Database`, que inicializa automaticamente a conexão PDO com o PostgreSQL.
+
+---
+
+## Banco de Dados
+
+O sistema utiliza **PostgreSQL** como banco principal.  
+As migrações são controladas pelo **Phinx**.
+
+### Executar migrações
+
 ```bash
-sudo systemctl enable --now php-fpm
+vendor/bin/phinx migrate -e development
 ```
 
-### 4. Configurar Nginx
-Crie o arquivo `/etc/nginx/sites-available/webservice` (e linke para `sites-enabled`, se usar essa convenção):
+### Criar nova migração
+
+```bash
+vendor/bin/phinx create NomeDaMigracao
+```
+
+### Estrutura básica do schema
+
+- **users** – informações de login e perfis (hash com bcrypt)
+- **tickets** – controle de chamados e status
+- **logs** – histórico de operações
+
+---
+
+## Scripts do Composer
+
+| Script | Descrição |
+|--------|------------|
+| `start` | Inicia o servidor embutido do PHP (`php -S localhost:8080 -t public`) |
+| `migrate` | Executa as migrações do banco (`phinx migrate`) |
+| `seed` | Popula o banco com dados iniciais (`phinx seed:run`) |
+| `testdb` | Testa a conexão com o banco (`php testDB.php`) |
+
+### Exemplo de execução
+
+```bash
+composer start
+```
+
+---
+
+## Configuração do Nginx
+
+### Exemplo para Linux (`/etc/nginx/sites-available/webservice`)
 
 ```nginx
 server {
-    listen 80 default_server;
+    listen 80;
     server_name projetowebservice.local;
 
-    root  /home/<username>/Projetos/ProjetoWebService/public;
+    root /home/<usuario>/Projetos/ProjetoWebService/public;
     index index.php;
 
     location / {
@@ -57,14 +121,15 @@ server {
     }
 
     location ~ \.php$ {
-        include        fastcgi_params;
-        fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }
 ```
 
-Teste e recarregue o Nginx:
+Após editar, teste e recarregue o serviço:
+
 ```bash
 sudo nginx -t
 sudo systemctl restart nginx
@@ -72,74 +137,33 @@ sudo systemctl restart nginx
 
 ---
 
-## Instalação no Windows
+## Estrutura Lógica
 
-### 1. Instalar pacotes
-- Baixe e instale [PHP for Windows](https://windows.php.net/download/) (Thread Safe recomendado)
-- Instale [Composer](https://getcomposer.org/download/)
-- Baixe [Nginx for Windows](https://nginx.org/en/download.html)
-- Instale Git se quiser clonar o repositório diretamente
-
-### 2. Estrutura do Projeto
-Coloque o projeto em `C:\nginx\html\ProjetoWebService`
-
-Dentro da pasta rode:
-```powershell
-composer install
-```
-
-### 3. Configuração do PHP
-Edite o arquivo `php.ini` e habilite extensões:
-```ini
-extension=mbstring
-extension=openssl
-```
-
-### 4. Configuração do Nginx (`conf/nginx.conf`)
-Adicione um bloco de servidor:
-
-```nginx
-server {
-    listen 80 default_server;
-    server_name projetowebservice.local;
-
-    root  /home/<username>/Projetos/ProjetoWebService/public;
-    index index.php;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    location ~ \.php$ {
-        include        fastcgi_params;
-        fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    }
-}
-```
-
-No Windows, é necessário rodar o PHP como FastCGI:
-```powershell
-php-cgi.exe -b 127.0.0.1:9000
-```
-Pode-se criar um script `.bat` para iniciar o PHP junto com o Nginx.
+- **Model** – representa as entidades do sistema (`User`, `Ticket`, etc.)
+- **Repository** – manipula o banco de dados via PDO
+- **Control** – lógica de negócios e resposta às rotas
+- **View** – renderização do frontend (HTML/PHP)
+- **Router** – definição das rotas em `public/index.php` usando o SimpleRouter
 
 ---
 
-## Primeira execução
-Após configurar e iniciar os serviços, abra no navegador:
+## Execução
+
+Após configurar o ambiente e o banco de dados:
+
+```bash
+composer start
 ```
-[http://localhost](http://projetowebservice.local)
+
+Acesse no navegador:
+
 ```
-O sistema deve exibir a página inicial do ProjetoWebService.
+http://localhost:8080
+```
 
 ---
 
-## Desenvolvimento
-- Código-fonte: `src/`
-- Arquivos públicos: `public/`
-- Arquivos de configuração: `bootstrap.php`, `header.php`
+## Autores
 
----
-
-Desenvolvido pelos estudantes Jean Carlos e André Emilio para o curso de Análise e Desenvolvimento de Sistemas pela UTFPR.
+Desenvolvido por **Jean Carlos** e **André Emílio**  
+para o curso de **Análise e Desenvolvimento de Sistemas** – **UTFPR**
