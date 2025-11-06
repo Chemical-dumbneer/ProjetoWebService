@@ -6,7 +6,7 @@ use enum\TicketStatus;
 
 class Ticket
 {
-    private int $id;
+    private ?int $id;
     private string $requerentUsername;
     private string $titulo;
     private string $descricao;
@@ -15,17 +15,19 @@ class Ticket
     /** @var TicketInteraction[]; */
     private array $interactions;
 
-    public function __construct(int $id, string $requerent,string $titulo,string $descricao, DateTime $dataCriacao, TicketStatus $status)
+    public function __construct(string $requerent,string $titulo,string $descricao, DateTime $dataCriacao, TicketStatus $status)
     {
-        $this->id = $id;
         $this->requerentUsername = $requerent;
         $this->titulo = $titulo;
         $this->descricao = $descricao;
         $this->dataCriacao = $dataCriacao;
-        $this->status = $status;
+        $this->status = $status ;
         $this->interactions = [];
     }
 
+    public function setId(int $id): void{
+        $this->id = $id;
+    }
 
     public function addInteraction(TicketInteraction $interaction): void
     {

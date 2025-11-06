@@ -15,6 +15,76 @@ class TicketRepository {
         
     }
 
+    static function getById(int $id):Ticket {
+         $pdo = database::getConnection();
+         $stmt = $pdo->prepare( '
+            SELECT 
+                t.id, 
+                u.username, 
+                t.titulo, 
+                t.descricao, 
+                t."dataCriacao", 
+                t.status
+            FROM tickets AS t
+            JOIN users AS u
+                ON t.id_requerent = u.id
+            WHERE 
+                t.id = :id
+            ORDER BY t."dataCriacao" DESC
+        ');
+         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+         $stmt->execute();
+         $ticket = $stmt->fetchAll(
+            PDO::FETCH_FUNC,
+            function ($id, $requerentName, $titulo, $descricao, $dataCriacao, $status) {
+                return new Ticket(
+                    $id,
+                    $requerentName,
+                    $titulo,
+                    $descricao,
+                    DateTime::createFromFormat('Y-m-d H:i:s',$dataCriacao),
+                    TicketStatus::from($status));
+            }
+         )[0];
+         $ticket->setId($ticket->getId());
+         return $ticket;
+    }
+
+    static function geTicketId(string $requerentName, DateTime $dataCriacao):int {
+        $pdo = database::getConnection();
+        $stmt = $pdo->prepare( '
+            SELECT 
+                t.id, 
+                u.username, 
+                t.titulo, 
+                t.descricao, 
+                t."dataCriacao", 
+                t.status
+            FROM tickets AS t
+            JOIN users AS u
+                ON t.id_requerent = u.id
+            WHERE 
+                t.id = :id
+            ORDER BY t."dataCriacao" DESC
+        ');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $ticket = $stmt->fetchAll(
+            PDO::FETCH_FUNC,
+            function ($id, $requerentName, $titulo, $descricao, $dataCriacao, $status) {
+                return new Ticket(
+                    $id,
+                    $requerentName,
+                    $titulo,
+                    $descricao,
+                    DateTime::createFromFormat('Y-m-d H:i:s',$dataCriacao),
+                    TicketStatus::from($status));
+            }
+        )[0];
+        $ticket->setId($ticket->getId());
+        return $ticket;
+    }
+
     static function getTickets():array {
          $pdo = database::getConnection();
          $stmt = $pdo->prepare('
@@ -31,7 +101,7 @@ class TicketRepository {
             ORDER BY t."dataCriacao" DESC
          ');
          $stmt->execute();
-         return $stmt->fetch(
+         return $stmt->fetchAll(
              PDO::FETCH_FUNC,
              function ($id, $requerentName, $titulo, $descricao, $dataCriacao, $status) {
                 return new Ticket(
@@ -39,7 +109,7 @@ class TicketRepository {
                     $requerentName,
                     $titulo,
                     $descricao,
-                    DateTime::createFromTimestamp($dataCriacao),
+                    DateTime::createFromFormat('Y-m-d H:i:s',$dataCriacao),
                     TicketStatus::from($status));
              }
          );
@@ -64,16 +134,14 @@ class TicketRepository {
             ORDER BY
                 i."timelinePosition"
         ');
-        $stmt->execute(
-            [':idTicket' => $idTicket]
-        );
+        $stmt->execute([':idTicket' => $idTicket]);
         return $stmt->fetchAll(
             PDO::FETCH_FUNC,
             function ($timelinePosition, $authorName, $dateTime, $interactionType, $descricao) {
                 return new TicketInteraction(
                     $timelinePosition,
                     $authorName,
-                    DateTime::createFromTimestamp($dateTime),
+                    DateTime::createFromFormat('Y-m-d H:i:s',$dateTime),
                     TicketInteractionType::from($interactionType),
                     $descricao
                 );
@@ -82,9 +150,7 @@ class TicketRepository {
     }
 
     static function addTicket(string $titulo, string $descricao, string $usuario):void {
-        $id = count($_SESSION['temp_tickets'] ?? []) + 1;
         $ticket = new Ticket(
-            id: $id,
             requerent: $usuario,
             titulo: $titulo,
             descricao: $descricao,

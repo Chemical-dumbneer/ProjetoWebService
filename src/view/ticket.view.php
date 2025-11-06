@@ -10,7 +10,7 @@
 
 <?php
     use enum\TipoUsuario;
-use repository\UserRepository;
+    use repository\UserRepository;
 
     require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
 

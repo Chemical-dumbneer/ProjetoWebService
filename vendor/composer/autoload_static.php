@@ -57,6 +57,7 @@ class ComposerStaticInitb4c753566ef5928430c7ce37b3661382
             'Psr\\Clock\\' => 10,
             'PhpOption\\' => 10,
             'Phinx\\' => 6,
+            'Pecee\\' => 6,
         ),
         'L' => 
         array (
@@ -164,6 +165,10 @@ class ComposerStaticInitb4c753566ef5928430c7ce37b3661382
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/robmorgan/phinx/src/Phinx',
+        ),
+        'Pecee\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pecee/simple-router/src/Pecee',
         ),
         'League\\Container\\' => 
         array (

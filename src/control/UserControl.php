@@ -3,8 +3,9 @@ namespace control;
 
 use enum\TipoUsuario;
 use model\User;
-use repository\UserRepository;
 use Pecee\SimpleRouter\SimpleRouter;
+use repository\UserRepository;
+
 class UserControl {
     function __Construct() {
         
@@ -24,10 +25,10 @@ class UserControl {
                     $_SESSION['usuario'] = $usuario;
                     $_SESSION['tipoUsuario'] = UserRepository::getUserByUsername($usuario)->getTipoUsuario();
                     $_SESSION['fotoUsuario'] = UserRepository::getUserByUsername($usuario)->getCaminhoFoto();
-
                     SimpleRouter::response()->redirect('/home');
                     exit;
                 } else {
+
                     $error = "Usuário ou senha inválidos!";
                 }
 

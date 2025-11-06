@@ -23,12 +23,12 @@ class UserRepository{
         $stmt->execute();
         return $stmt->fetchAll(
             PDO::FETCH_FUNC,
-            function ($username, $nomeCompleto, $senha, $caminhoFoto, $tipoUsuario) {
+            function ($username, $nomeCompleto, $caminhoFoto, $tipoUsuario) {
                 return new User(
                     $username,
                     $nomeCompleto,
                     $caminhoFoto,
-                    TipoUsuario::getFromText($tipoUsuario)
+                    TipoUsuario::getFromValue($tipoUsuario)
                 );
             }
         );
@@ -37,18 +37,18 @@ class UserRepository{
     static function validarCredenciais(string $login, string $senha):bool {
         $pdo = Database::getConnection();
         $stmt = $pdo->prepare('
-            SELECT
-                COUNT(*)
-            FROM
+            SELECT 
+                "pwdHash" = crypt(:senha, "pwdHash") AS match
+            FROM 
                 users
-            WHERE
-                username = :login AND
-                "pwdHash" = crypt(:senha, "pwdHash")
+            WHERE 
+                username = :login;
         ');
         $stmt->bindValue(':login', $login, PDO::PARAM_STR);
         $stmt->bindValue(':senha', $senha, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchColumn() > 0;
+        $res = $stmt->fetchColumn();
+        return ($res);
     }
 
     static function addUser(User $novoUsuario): void {
@@ -83,7 +83,7 @@ class UserRepository{
             WHERE
                 username = :username
          ');
-        $stmt->execute();
+        $stmt->execute(['username' => $username]);
         $arr = $stmt->fetchAll(
             PDO::FETCH_FUNC,
             function ($username, $nomeCompleto, $caminhoFoto, $tipoUsuario) {
@@ -91,7 +91,7 @@ class UserRepository{
                     $username,
                     $nomeCompleto,
                     $caminhoFoto,
-                    TipoUsuario::getFromText($tipoUsuario)
+                    TipoUsuario::getFromValue($tipoUsuario)
                 );
             }
         );

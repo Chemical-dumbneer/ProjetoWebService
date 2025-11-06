@@ -19,4 +19,11 @@ enum TipoUsuario: int {
             default => throw new \InvalidArgumentException("Tipo de usuário inválido")
         };
     }
+
+    public static  function getFromValue(int $val):TipoUsuario {
+        return match ($val) {
+            1 => TipoUsuario::Usuario,
+            2 => TipoUsuario::Tecnico,
+        };
+    }
 }

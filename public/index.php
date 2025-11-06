@@ -1,7 +1,10 @@
 <?php
+error_reporting(E_COMPILE_ERROR | E_ERROR | E_PARSE | E_CORE_ERROR | E_USER_ERROR);
+ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
 
-require_once "../vendor/autoload.php";
-require_once "../src/routes/routes.php";
+require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/../src/routes/routes.php";
 require_once __DIR__ . '/../bootstrap.php';
 
 use Pecee\SimpleRouter\SimpleRouter;

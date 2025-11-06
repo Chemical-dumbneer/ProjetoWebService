@@ -61,12 +61,8 @@ class TicketControl {
         $tipo_ticket = $_POST['tipo_ticket'] ?? null;
         $usuario = $_SESSION['username'] ?? null;
 
-        foreach ($_SESSION['temp_tickets'] as $t) {
-            if ($t->getId() == $ticketIdSelecionado) {
-                $ticket = $t;
-                break;
-            }
-        }
+
+        $ticket = TicketRepository::getById($ticketId);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['mensagem'])) {
             $tipoSelecionado = $_POST['tipo_ticket'] ?? 'FollowUp';
@@ -82,8 +78,7 @@ class TicketControl {
                 )
             );
         }
-
-        $interactions = $ticket->getInteractions();
+        $interactions = TicketRepository::getTicketInteractions($ticketId);
         $interactionsViewData =self::prepararInteracao($interactions);
         require __DIR__ . '/../view/ticketTimeline.view.php';
     }
