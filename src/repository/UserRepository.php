@@ -13,6 +13,7 @@ class UserRepository{
         $pdo = Database::getConnection();
         $stmt = $pdo->prepare('
             SELECT
+                id,
                 username,
                 "nomeCompleto",
                 "caminhoFoto",
@@ -23,13 +24,15 @@ class UserRepository{
         $stmt->execute();
         return $stmt->fetchAll(
             PDO::FETCH_FUNC,
-            function ($username, $nomeCompleto, $caminhoFoto, $tipoUsuario) {
-                return new User(
+            function ($id, $username, $nomeCompleto, $caminhoFoto, $tipoUsuario) {
+                $user = new User(
                     $username,
                     $nomeCompleto,
                     $caminhoFoto,
                     TipoUsuario::getFromValue($tipoUsuario)
                 );
+                $user->setId($id);
+                return $user;
             }
         );
     }
@@ -66,7 +69,7 @@ class UserRepository{
         $stmt->bindvalue(":nomeCompleto", $novoUsuario->getNomeCompleto(), PDO::PARAM_STR);
         $stmt->bindvalue(":senha", $novoUsuario->getSenha(), PDO::PARAM_STR);
         $stmt->bindValue(":caminhoFoto", $novoUsuario->getCaminhoFoto(), PDO::PARAM_STR);
-        $stmt->bindvalue(":tipoUsuario", $novoUsuario->getTipoUsuario(), PDO::PARAM_STR);
+        $stmt->bindvalue(":tipoUsuario", $novoUsuario->getTipoUsuario()->getId(), PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -74,6 +77,7 @@ class UserRepository{
          $pdo = Database::getConnection();
          $stmt = $pdo->prepare('
             SELECT
+                id,
                 username,
                 "nomeCompleto",
                 "caminhoFoto",
@@ -86,13 +90,15 @@ class UserRepository{
         $stmt->execute(['username' => $username]);
         $arr = $stmt->fetchAll(
             PDO::FETCH_FUNC,
-            function ($username, $nomeCompleto, $caminhoFoto, $tipoUsuario) {
-                return new User(
+            function ($id, $username, $nomeCompleto, $caminhoFoto, $tipoUsuario) {
+                $user = new User(
                     $username,
                     $nomeCompleto,
                     $caminhoFoto,
                     TipoUsuario::getFromValue($tipoUsuario)
                 );
+                $user->setId($id);
+                return $user;
             }
         );
         if (count($arr) > 0){

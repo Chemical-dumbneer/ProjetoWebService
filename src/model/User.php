@@ -4,6 +4,7 @@ use enum\TipoUsuario;
 
 class User
 {
+    private ?int $id;
     private string $username;
     private string $nomeCompleto;
     private ?string $senha;
@@ -15,6 +16,14 @@ class User
         $this->nomeCompleto = $nomeCompleto;
         $this->caminhoFoto = $caminhoFoto ?? 'img/users/defaultUserPic.png';
         $this->tipoUsuario = $tipoUsuario;
+    }
+
+    public function setId(int $id): void {
+        $this->id = $id;
+    }
+
+    public function getId(): ?int {
+        return $this->id;
     }
 
     public function setSenha(string $senha): void {

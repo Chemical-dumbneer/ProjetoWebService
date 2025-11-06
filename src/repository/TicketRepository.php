@@ -37,16 +37,18 @@ class TicketRepository {
          $ticket = $stmt->fetchAll(
             PDO::FETCH_FUNC,
             function ($id, $requerentName, $titulo, $descricao, $dataCriacao, $status) {
-                return new Ticket(
-                    $id,
+                $newTicket = new Ticket(
                     $requerentName,
                     $titulo,
                     $descricao,
                     DateTime::createFromFormat('Y-m-d H:i:s',$dataCriacao),
-                    TicketStatus::from($status));
+                    TicketStatus::from($status)
+                );
+                $newTicket->setId($id);
+                return $newTicket;
             }
          )[0];
-         $ticket->setId($ticket->getId());
+         $ticket->setId($id);
          return $ticket;
     }
 
@@ -54,35 +56,18 @@ class TicketRepository {
         $pdo = database::getConnection();
         $stmt = $pdo->prepare( '
             SELECT 
-                t.id, 
-                u.username, 
-                t.titulo, 
-                t.descricao, 
-                t."dataCriacao", 
-                t.status
+                t.id
             FROM tickets AS t
             JOIN users AS u
                 ON t.id_requerent = u.id
             WHERE 
-                t.id = :id
-            ORDER BY t."dataCriacao" DESC
+                u.username = :username AND
+                t."dataCriacao" = :dataCriacao
         ');
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':username', $requerentName, PDO::PARAM_INT);
+        $stmt->bindValue(':dataCriacao', $dataCriacao, PDO::PARAM_STR);
         $stmt->execute();
-        $ticket = $stmt->fetchAll(
-            PDO::FETCH_FUNC,
-            function ($id, $requerentName, $titulo, $descricao, $dataCriacao, $status) {
-                return new Ticket(
-                    $id,
-                    $requerentName,
-                    $titulo,
-                    $descricao,
-                    DateTime::createFromFormat('Y-m-d H:i:s',$dataCriacao),
-                    TicketStatus::from($status));
-            }
-        )[0];
-        $ticket->setId($ticket->getId());
-        return $ticket;
+        return $stmt->fetchAll()[0];
     }
 
     static function getTickets():array {
@@ -104,13 +89,15 @@ class TicketRepository {
          return $stmt->fetchAll(
              PDO::FETCH_FUNC,
              function ($id, $requerentName, $titulo, $descricao, $dataCriacao, $status) {
-                return new Ticket(
-                    $id,
+                 $newTicket = new Ticket(
                     $requerentName,
                     $titulo,
                     $descricao,
                     DateTime::createFromFormat('Y-m-d H:i:s',$dataCriacao),
-                    TicketStatus::from($status));
+                    TicketStatus::from($status)
+                );
+                 $newTicket->setId($id);
+                return $newTicket;
              }
          );
     }
@@ -157,6 +144,7 @@ class TicketRepository {
             dataCriacao: new DateTime('now'),
             status: TicketStatus::Aberto
         );
+        $user = UserRepository::getUserByUsername($usuario);
         $pdo = database::getConnection();
         $stmt = $pdo->prepare('
             INSERT INTO
@@ -166,7 +154,7 @@ class TicketRepository {
             VALUES(:id_requerent, :titulo, :descricao, :dataCriacao, :status)
         ');
         $stmt->execute([
-            ':id_requerent' => $ticket->getId(),
+            ':id_requerent' => $user->getId(),
             ':titulo' => $ticket->getTitulo(),
             ':descricao' => $ticket->getDescricao(),
             ':dataCriacao' => $ticket->getDataCriacao()->format('Y-m-d H:i:s'),

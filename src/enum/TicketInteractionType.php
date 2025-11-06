@@ -14,6 +14,14 @@ enum TicketInteractionType: int{
         };
     }
 
+    public function getValue():int {
+        return match ($this) {
+            self::FollowUp => 1,
+            self::Task => 2,
+            self::Solution => 3
+        };
+    }
+
     public static function getFromText(string $desc): TicketInteractionType {
         return match($desc) {
             'FollowUp' => self::FollowUp,

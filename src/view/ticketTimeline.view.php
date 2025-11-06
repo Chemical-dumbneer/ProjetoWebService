@@ -54,7 +54,7 @@
         <?php endforeach; ?>
     </div>
 
-    <form method="post" class="mt-3" >
+    <form method="post" class="mt-3" action="/ticket/<?=$ticket->getId()?>/timeline">
         <div class="mb-3">
         <?php if(isset($tipo) && $tipo === TipoUsuario::Tecnico):?>
         <label class="form-label"><strong>Tipo de Resposta:</strong></label>

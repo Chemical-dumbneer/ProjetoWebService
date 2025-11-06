@@ -13,4 +13,12 @@ enum TicketStatus: int {
             self::Solucionado => 'Solucionado'
         };
     }
+
+    public function getValue():string {
+        return match ($this) {
+            self::Aberto => 1,
+            self::Pendente => 2,
+            self::Solucionado => 3
+        };
+    }
 }
