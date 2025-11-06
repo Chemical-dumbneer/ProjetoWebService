@@ -38,6 +38,9 @@ SimpleRouter::get('/logout', function() {
     SimpleRouter::get('/ticket/{id}/timeline', [TicketControl::class, 'abrirTimeLine']);
     SimpleRouter::post('/ticket/{id}/timeline', [TicketControl::class, 'abrirTimeLine']);
 
+    SimpleRouter::get('/ticket/{id}/timeline/newInteraction', [TicketControl::class, 'adicionarInteracao']);
+    SimpleRouter::post('/ticket/{id}/timeline/newInteraction', [TicketControl::class, 'adicionarInteracao']);
+
 
     SimpleRouter::error(function(Request $request, \Exception $exception) {
         if($exception instanceof \Pecee\SimpleRouter\Exceptions\NotFoundHttpException) {

@@ -80,6 +80,7 @@ class TicketControl {
         }
         $interactions = TicketRepository::getTicketInteractions($ticketId);
         $interactionsViewData =self::prepararInteracao($interactions);
+        $_SESSION['CurrentTicket'] = $ticket;
         require __DIR__ . '/../view/ticketTimeline.view.php';
     }
 

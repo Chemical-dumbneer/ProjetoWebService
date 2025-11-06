@@ -14,7 +14,7 @@
     use repository\UserRepository;
 
     require_once __DIR__ . '/partials/header.php'; // ajuste o caminho
-
+    $ticket = $_SESSION['CurrentTicket'];
     // garanta que a sessão já foi iniciada no front controller (index.php)
     $tipo = $_SESSION['tipoUsuario'] ?? TipoUsuario::Usuario;
     $username = $_SESSION['usuario'] ?? null;
@@ -54,7 +54,7 @@
         <?php endforeach; ?>
     </div>
 
-    <form method="post" class="mt-3" action="/ticket/<?=$ticket->getId()?>/timeline">
+    <form method="post" class="mt-3" action="/ticket/<?php $ticket->getId()?>/timeline/newInteraction">
         <div class="mb-3">
         <?php if(isset($tipo) && $tipo === TipoUsuario::Tecnico):?>
         <label class="form-label"><strong>Tipo de Resposta:</strong></label>
